@@ -6,7 +6,7 @@ public class ViewManager : MonoBehaviour {
 
 	public static ViewManager inst;
 
-	public enum ViewLabel { Lines, Tasks }
+	public enum ViewLabel { Lines, Tasks, SubTasks }
 
 	BaseView _currentView;
 	public ViewLabel currentView {
@@ -27,9 +27,15 @@ public class ViewManager : MonoBehaviour {
 	Dictionary<ViewLabel, BaseView> _views = new Dictionary<ViewLabel, BaseView>();
 
 	public void ShowTasksView(Line line) {
-		TasksView view = (TasksView)_views[ViewLabel.Tasks];
 		currentView = ViewLabel.Tasks;
+		TasksView view = (TasksView)_views[ViewLabel.Tasks];
 		view.SetLine(line);
+	}
+
+	public void ShowSubTasksView(Task task) {
+		currentView = ViewLabel.SubTasks;
+		SubTasksView view = (SubTasksView)_views[ViewLabel.SubTasks];
+		view.SetTask(task);
 	}
 
 	void Save() {
@@ -51,8 +57,13 @@ public class ViewManager : MonoBehaviour {
 
 	void Update() {
 		if (Input.GetKeyDown(KeyCode.Escape)) {
-			if (currentView == ViewLabel.Tasks) {
-				currentView = ViewLabel.Lines;
+			switch (currentView) {
+				case ViewLabel.Tasks:
+					currentView = ViewLabel.Lines;
+					break;
+				case ViewLabel.SubTasks:
+					currentView = ViewLabel.Tasks;
+					break;
 			}
 		}
 	}

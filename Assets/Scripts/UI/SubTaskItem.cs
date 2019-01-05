@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TaskItem : BaseItem<Task> {
+public class SubTaskItem : BaseItem<SubTask> {
 
-	public Task task {
+	public SubTask subtask {
 		get { return data; }
 		set { data = value; }
 	}

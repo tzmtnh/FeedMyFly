@@ -35,7 +35,7 @@ public class TasksView : BaseView<Task> {
 	}
 
 	protected override void OnItemDoubleClicked(BaseItem<Task> item) {
-		Debug.Log("Task double clicked!");
+		ViewManager.inst.ShowSubTasksView(item.data);
 	}
 
 	protected override void Awake() {
