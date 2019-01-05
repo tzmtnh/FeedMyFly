@@ -53,9 +53,11 @@ public abstract class BaseItem<T> : BaseItem where T : Data {
 		set {
 			_data.name = value;
 			gameObject.name = "Item " + value;
-			_nameInput.text = value;
+			_nameInput.text = label;
 		}
 	}
+
+	protected abstract string label { get; }
 
 	public void Copy(BaseItem<T> from) {
 		name = from.name + " (Copy)";

@@ -8,4 +8,8 @@ public class TaskItem : BaseItem<Task> {
 		get { return data; }
 		set { data = value; }
 	}
+
+	protected override string label {
+		get { return string.Format("{0} ({1} SubTasks)", name, task.subtasks.Count); }
+	}
 }
