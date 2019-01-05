@@ -10,13 +10,10 @@ public class TasksView : BaseView<Task> {
 
 	protected override string namePrefix { get { return "Task"; } }
 
-	protected override BaseItem<Task> CreateItem(Task task = null) {
-		if (task == null) {
-			task = new Task(GetUniqueName());
-			_line.tasks.Add(task);
-		}
-
-		return base.CreateItem(task);
+	protected override Task CreateData() {
+		Task task = new Task(GetUniqueName());
+		_line.tasks.Add(task);
+		return task;
 	}
 
 	protected override void DeleteItem(BaseItem<Task> item) {

@@ -60,7 +60,13 @@ public abstract class BaseView<T> : BaseView where T : Data {
 		return uniqueName;
 	}
 
-	protected virtual BaseItem<T> CreateItem(T data = null) {
+	protected abstract T CreateData();
+
+	protected BaseItem<T> CreateItem(T data = null) {
+		if (data == null) {
+			data = CreateData();
+		}
+
 		BaseItem<T> item = Instantiate(_prototypeItem, _prototypeItem.transform.parent);
 		item.gameObject.SetActive(true);
 		item.data = data;

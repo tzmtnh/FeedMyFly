@@ -10,13 +10,10 @@ public class LinesView : BaseView<Line> {
 
 	protected override string namePrefix { get { return "Line"; } }
 
-	protected override BaseItem<Line> CreateItem(Line line = null) {
-		if (line == null) {
-			line = new Line(GetUniqueName());
-			_lines.Add(line);
-		}
-
-		return base.CreateItem(line);
+	protected override Line CreateData() {
+		Line line = new Line(GetUniqueName());
+		_lines.Add(line);
+		return line;
 	}
 
 	protected override void DeleteItem(BaseItem<Line> item) {
