@@ -9,7 +9,4 @@ public class LineItem : BaseItem<Line> {
 		set { data = value; }
 	}
 
-	protected override string label {
-		get { return string.Format("{0} ({1} Tasks)", name, line.tasks.Count); }
-	}
 }

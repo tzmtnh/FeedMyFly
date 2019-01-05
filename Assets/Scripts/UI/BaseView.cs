@@ -115,6 +115,7 @@ public abstract class BaseView<T> : BaseView where T : Data {
 
 	protected abstract void OnItemDoubleClicked(BaseItem<T> item);
 
+	const float DOUBLE_CLICK_THRESH = 0.3f;
 	float _lastItemClickTime;
 	public void OnItemClicked() {
 		GameObject go = EventSystem.current.currentSelectedGameObject;
@@ -126,7 +127,6 @@ public abstract class BaseView<T> : BaseView where T : Data {
 		}
 
 		if (item.selected) {
-			const float DOUBLE_CLICK_THRESH = 0.2f;
 			float dt = Time.time - _lastItemClickTime;
 			if (dt < DOUBLE_CLICK_THRESH) {
 				OnItemDoubleClicked(item);

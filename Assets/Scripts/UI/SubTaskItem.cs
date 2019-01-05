@@ -9,7 +9,4 @@ public class SubTaskItem : BaseItem<SubTask> {
 		set { data = value; }
 	}
 
-	protected override string label {
-		get { return name; }
-	}
 }

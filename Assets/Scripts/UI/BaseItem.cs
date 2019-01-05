@@ -20,14 +20,6 @@ public abstract class BaseItem : MonoBehaviour {
 		}
 	}
 
-	public void OnInputNameChanged() {
-		if (_nameInput.text.Length == 0) {
-			_nameInput.text = name;
-		} else {
-			name = _nameInput.text;
-		}
-	}
-
 	void Awake() {
 		_bgImage = GetComponent<Image>();
 		_bgColor = _bgImage.color;
@@ -53,11 +45,17 @@ public abstract class BaseItem<T> : BaseItem where T : Data {
 		set {
 			_data.name = value;
 			gameObject.name = "Item " + value;
-			_nameInput.text = label;
+			_nameInput.text = value;
 		}
 	}
 
-	protected abstract string label { get; }
+	public void OnInputNameChanged() {
+		if (_nameInput.text.Length == 0) {
+			_nameInput.text = name;
+		} else {
+			name = _nameInput.text;
+		}
+	}
 
 	public void Copy(BaseItem<T> from) {
 		name = from.name + " (Copy)";
