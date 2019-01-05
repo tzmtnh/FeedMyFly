@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Line {
-
-	public string name;
+public class Line : Data {
 
 	public Tasks tasks;
 
-	public Line(string name) {
-		this.name = name;
+	public Line(string name) : base(name) {
 		tasks = new Tasks();
 	}
 

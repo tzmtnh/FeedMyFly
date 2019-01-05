@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Task : MonoBehaviour {
+[System.Serializable]
+public class Task : Data {
 
-	// Use this for initialization
-	void Start () {
-		
+	//public SubTasks subtasks;
+
+	public Task(string name) : base(name) {
+		//subtasks = new SubTasks();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
 }

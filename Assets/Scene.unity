@@ -276,7 +276,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1702327467}
-          m_MethodName: OnLineClicked
+          m_MethodName: OnItemClicked
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -523,7 +523,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 169439002}
         m_MethodName: OnDuplicateClicked
         m_Mode: 1
         m_Arguments:
@@ -1280,7 +1280,6 @@ GameObject:
   - component: {fileID: 962196071}
   - component: {fileID: 962196070}
   - component: {fileID: 962196069}
-  - component: {fileID: 962196073}
   - component: {fileID: 962196072}
   m_Layer: 5
   m_Name: Button Line Prototype
@@ -1348,7 +1347,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1702327467}
-        m_MethodName: OnLineClicked
+        m_MethodName: OnItemClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1404,19 +1403,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60901654554d7a44b86215af23615bfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &962196073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 962196067}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates: []
-  delegates: []
 --- !u!1 &977501282
 GameObject:
   m_ObjectHideFlags: 0
@@ -2306,7 +2292,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 169439002}
         m_MethodName: OnDeleteClicked
         m_Mode: 1
         m_Arguments:
@@ -2437,7 +2423,6 @@ GameObject:
   - component: {fileID: 1698252522}
   - component: {fileID: 1698252521}
   - component: {fileID: 1698252520}
-  - component: {fileID: 1698252519}
   - component: {fileID: 1698252518}
   m_Layer: 5
   m_Name: Button Task Prototype
@@ -2476,19 +2461,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0772ebc6aa300004cb2a7284c9936e87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1698252519
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1698252516}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates: []
-  delegates: []
 --- !u!114 &1698252520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2528,8 +2500,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: OnLineClicked
+      - m_Target: {fileID: 169439002}
+        m_MethodName: OnItemClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3003,8 +2975,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
-          m_MethodName: OnLineClicked
+        - m_Target: {fileID: 169439002}
+          m_MethodName: OnItemClicked
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -3066,7 +3038,7 @@ MonoBehaviour:
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1698252518}
         m_MethodName: OnInputNameChanged
         m_Mode: 1
         m_Arguments:
@@ -3200,7 +3172,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 169439002}
         m_MethodName: OnAddClicked
         m_Mode: 1
         m_Arguments:

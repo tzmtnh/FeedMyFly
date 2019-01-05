@@ -28,8 +28,13 @@ public class ViewManager : MonoBehaviour {
 
 	public void ShowTasksView(Line line) {
 		TasksView view = (TasksView)_views[ViewLabel.Tasks];
-		view.SetLine(line);
 		currentView = ViewLabel.Tasks;
+		view.SetLine(line);
+	}
+
+	void Save() {
+		LinesView linesView = (LinesView)_views[ViewLabel.Lines];
+		linesView.Save();
 	}
 
 	void Awake() {
@@ -52,4 +57,12 @@ public class ViewManager : MonoBehaviour {
 		}
 	}
 
+	void OnApplicationPause(bool pause) {
+		if (pause == false) return;
+		Save();
+	}
+
+	void OnApplicationQuit() {
+		Save();
+	}
 }

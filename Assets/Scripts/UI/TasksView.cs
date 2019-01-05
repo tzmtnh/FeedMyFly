@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using UnityEngine.Assertions;
 
-public class TasksView : BaseView {
+public class TasksView : BaseView<Task> {
 
 	Line _line;
 	Text _lineNameText;
@@ -12,7 +14,7 @@ public class TasksView : BaseView {
 	TaskItem _selectedTask;
 	List<TaskItem> _taskItems = new List<TaskItem>();
 
-	void SetSelectedLine(TaskItem taskItem) {
+	void SetSelectedTask(TaskItem taskItem) {
 		if (taskItem == _selectedTask) return;
 
 		if (_selectedTask != null) {
@@ -26,18 +28,18 @@ public class TasksView : BaseView {
 		_selectedTask = taskItem;
 	}
 
-	TaskItem CreateTaskItem(Task task = null) {
+	protected override BaseItem<Task> CreateItem(Task task = null) {
 		if (task == null) {
-			task = new Task();
+			task = new Task(GetUniqueName());
 			_line.tasks.Add(task);
 		}
 
-		TaskItem taskItem = Instantiate(_taskPrototype, _taskPrototype.transform.parent);
-		taskItem.gameObject.SetActive(true);
-		taskItem.task = task;
-		_taskItems.Add(taskItem);
-		SetSelectedLine(taskItem);
-		return taskItem;
+		return base.CreateItem(task);
+	}
+
+	protected override void DeleteItem(BaseItem<Task> item) {
+		_line.tasks.Remove(item.data);
+		DeleteItem(item);
 	}
 
 	void LoadTasks() {
@@ -47,22 +49,22 @@ public class TasksView : BaseView {
 		_taskItems.Clear();
 
 		foreach (Task task in _line.tasks) {
-			CreateTaskItem(task);
+			CreateItem(task);
 		}
 	}
 
 	public void SetLine(Line line) {
 		_line = line;
 		_lineNameText.text = line.name;
-
 		LoadTasks();
 	}
 
-	public void OnAddTaskClicked() {
-
+	protected override void OnItemDoubleClicked(BaseItem<Task> item) {
+		Debug.Log("Task double clicked!");
 	}
 
-	void Awake() {
+	protected override void Awake() {
+		base.Awake();
 		_lineNameText = transform.Find("Text Line Name").GetComponent<Text>();
 	}
 

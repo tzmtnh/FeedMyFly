@@ -23,7 +23,7 @@ public class Lines {
 		}
 	}
 
-	public void save(string filename) {
+	public void Save(string filename) {
 		if (File.Exists(filename)) {
 			File.Delete(filename);
 		}
