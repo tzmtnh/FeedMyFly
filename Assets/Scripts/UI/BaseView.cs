@@ -41,13 +41,14 @@ public abstract class BaseView<T> : BaseView where T : Data {
 		}
 	}
 
+	protected abstract string namePrefix { get; }
 	protected string GetUniqueName() {
 		int index = 0;
 		bool searching = true;
 		string uniqueName = "";
 		while (searching) {
 			index++;
-			uniqueName = "Line " + index;
+			uniqueName = namePrefix + " " + index;
 			searching = false;
 			foreach (BaseItem<T> item in _items) {
 				if (item.name == uniqueName) {
@@ -83,6 +84,13 @@ public abstract class BaseView<T> : BaseView where T : Data {
 		BaseItem<T> duplicatedItem = CreateItem();
 		duplicatedItem.Copy(item);
 		selectedItem = duplicatedItem;
+	}
+
+	protected void ClearItems() {
+		foreach (BaseItem item in _items) {
+			Destroy(item.gameObject);
+		}
+		_items.Clear();
 	}
 
 	public void OnAddClicked() {

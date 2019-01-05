@@ -2,31 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using UnityEngine.Assertions;
 
 public class TasksView : BaseView<Task> {
 
 	Line _line;
 	Text _lineNameText;
 
-	TaskItem _taskPrototype;
-	TaskItem _selectedTask;
-	List<TaskItem> _taskItems = new List<TaskItem>();
-
-	void SetSelectedTask(TaskItem taskItem) {
-		if (taskItem == _selectedTask) return;
-
-		if (_selectedTask != null) {
-			_selectedTask.selected = false;
-		}
-
-		if (taskItem != null) {
-			taskItem.selected = true;
-		}
-
-		_selectedTask = taskItem;
-	}
+	protected override string namePrefix { get { return "Task"; } }
 
 	protected override BaseItem<Task> CreateItem(Task task = null) {
 		if (task == null) {
@@ -39,15 +21,11 @@ public class TasksView : BaseView<Task> {
 
 	protected override void DeleteItem(BaseItem<Task> item) {
 		_line.tasks.Remove(item.data);
-		DeleteItem(item);
+		base.DeleteItem(item);
 	}
 
 	void LoadTasks() {
-		foreach (TaskItem item in _taskItems) {
-			Destroy(item.gameObject);
-		}
-		_taskItems.Clear();
-
+		ClearItems();
 		foreach (Task task in _line.tasks) {
 			CreateItem(task);
 		}

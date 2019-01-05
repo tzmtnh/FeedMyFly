@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using UnityEngine.Assertions;
 
 public class LinesView : BaseView<Line> {
 
 	string _saveFileName;
 	Lines _lines = new Lines();
+
+	protected override string namePrefix { get { return "Line"; } }
 
 	protected override BaseItem<Line> CreateItem(Line line = null) {
 		if (line == null) {
