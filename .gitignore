@@ -1,0 +1,52 @@
+# =============== #
+# Unity generated #
+# =============== #
+/Temp/
+/Obj/
+/UnityGenerated/
+/Library/
+/Build/
+ 
+# ===================================== #
+# Visual Studio / MonoDevelop generated #
+# ===================================== #
+ExportedObj/
+*.svd
+*.userprefs
+*.csproj
+*.pidb
+*.suo
+*.sln
+*.user
+*.unityproj
+*.booproj
+*.ide
+*.app
+.vs/
+
+
+# ====================== #
+# Sublime Text generated #
+# ====================== #
+*.sublime-workspace
+
+# =======#
+# Python #
+# =======#
+*.pyc
+*.pyc.meta
+
+# ============ #
+# OS generated #
+# ============ #
+*.DS_Store
+#*.DS_Store?
+#*._
+#*.Spotlight-V100
+#*.Trashes
+#Icon?
+#ehthumbs.db
+#Thumbs.db
+Assets/StreamingAssets/build_info.txt
+Assets/StreamingAssets/build_info.txt.meta
+Assets/StreamingAssets.meta
