@@ -8,6 +8,12 @@ public class ViewManager : MonoBehaviour {
 
 	public enum ViewLabel { Lines, Tasks, SubTasks }
 
+	public enum DeadlineState { Future, Today, Late, Done }
+	public Color colorFuture = Color.green;
+	public Color colorToday = Color.yellow;
+	public Color colorLate = Color.red;
+	public Color colorDone = Color.gray;
+
 	BaseView _currentView;
 	public ViewLabel currentView {
 		get { return _currentView.label; }
@@ -41,6 +47,16 @@ public class ViewManager : MonoBehaviour {
 	void Save() {
 		LinesView linesView = (LinesView)_views[ViewLabel.Lines];
 		linesView.Save();
+	}
+
+	public static Color GetColor(DeadlineState state) {
+		switch (state) {
+			case DeadlineState.Future:	return inst.colorFuture;
+			case DeadlineState.Today:	return inst.colorToday;
+			case DeadlineState.Late:	return inst.colorLate;
+			case DeadlineState.Done:	return inst.colorDone;
+			default:					return Color.magenta;
+		}
 	}
 
 	void Awake() {

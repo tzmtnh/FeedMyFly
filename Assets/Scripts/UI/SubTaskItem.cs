@@ -7,17 +7,6 @@ public class SubTaskItem : BaseTaskItem<SubTask> {
 
 	public Text offsetText;
 
-	public override SubTask data {
-		get {
-			return base.data;
-		}
-
-		set {
-			base.data = value;
-			offsetText.text = "(" + subtask.Offset + ")";
-		}
-	}
-
 	public SubTask subtask { get { return data; } }
 
 	public override SerializableDate date {
@@ -33,6 +22,23 @@ public class SubTaskItem : BaseTaskItem<SubTask> {
 		} else {
 			subtask.AddDays(1);
 		}
-		view.RefreshItems();
+	}
+
+	public override void Refresh() {
+		base.Refresh();
+		offsetText.text = "(" + subtask.Offset + ")";
+	}
+
+	protected override Color GetBGColor() {
+		int c = date.Compare(System.DateTime.Now);
+		ViewManager.DeadlineState state;
+		if (c > 0) {
+			state = ViewManager.DeadlineState.Future;
+		} else if (c == 0) {
+			state = ViewManager.DeadlineState.Today;
+		} else {
+			state = ViewManager.DeadlineState.Late;
+		}
+		return ViewManager.GetColor(state);
 	}
 }

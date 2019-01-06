@@ -129,7 +129,12 @@ public abstract class BaseView<T> : BaseView where T : Data {
 		_lastItemClickTime = Time.time;
 	}
 
-	public virtual void RefreshItems() { }
+	public override void Show() {
+		base.Show();
+		foreach (BaseItem<T> item in _items) {
+			item.Refresh();
+		}
+	}
 
 	protected virtual void Awake() {
 		_prototypeItem = GetComponentInChildren<BaseItem<T>>();

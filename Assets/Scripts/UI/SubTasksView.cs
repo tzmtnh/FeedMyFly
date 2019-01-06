@@ -38,13 +38,6 @@ public class SubTasksView : BaseView<SubTask> {
 		Debug.Log("SubTask double clicked!");
 	}
 
-	public override void RefreshItems() {
-		base.RefreshItems();
-		foreach (BaseTaskItem<SubTask> item in _items) {
-			item.OnDateChanged();
-		}
-	}
-
 	protected override void Awake() {
 		base.Awake();
 		_taskNameText = transform.Find("Text Task Name").GetComponent<Text>();

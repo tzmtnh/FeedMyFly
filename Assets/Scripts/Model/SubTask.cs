@@ -17,6 +17,7 @@ public class SubTask : Data {
 
 	public void AddDays(int days) {
 		date.AddDays(days);
+		OnChanged();
 		parent.OnSubTaskDateChanged(this);
 	}
 

@@ -32,6 +32,7 @@ public class Task : Data, ISerializationCallbackReceiver {
 				SubTask s = subtasks.list[i];
 				dateTime = dateTime.AddDays(-s.Offset);
 				s.date.dateTime = dateTime;
+				s.OnChanged();
 			}
 		}
 
@@ -41,6 +42,7 @@ public class Task : Data, ISerializationCallbackReceiver {
 			for (int i = index + 1; i < subtasks.Count; i++) {
 				SubTask s = subtasks.list[i];
 				s.date.dateTime = dateTime;
+				s.OnChanged();
 				dateTime = dateTime.AddDays(s.Offset);
 			}
 		}

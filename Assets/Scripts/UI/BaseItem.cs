@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public abstract class BaseItem : MonoBehaviour {
 
 	Image _bgImage;
-	Color _bgColor;
 	public InputField nameInput;
 
 	bool _selected = false;
@@ -17,25 +16,37 @@ public abstract class BaseItem : MonoBehaviour {
 			if (_selected == value) return;
 			if (_bgImage == null) return;
 			_selected = value;
-			_bgImage.color = value ? Color.yellow : _bgColor;
+			Refresh();
 		}
+	}
+
+	protected abstract Color GetBGColor();
+
+	public virtual void Refresh() {
+		Color bgColor = GetBGColor();
+		if (selected == false) {
+			bgColor *= 0.8f;
+			bgColor.a = 1;
+		}
+		_bgImage.color = bgColor;
 	}
 
 	void Awake() {
 		_bgImage = GetComponent<Image>();
-		_bgColor = _bgImage.color;
 	}
+
 }
 
 public abstract class BaseItem<T> : BaseItem where T : Data {
 
 	T _data;
-	public virtual T data {
+	public T data {
 		get { return _data; }
 		set {
 			if (_data == value) return;
 			_data = value;
-			name = _data.name;
+			_data.OnDataChanged += Refresh;
+			Refresh();
 		}
 	}
 
@@ -65,6 +76,11 @@ public abstract class BaseItem<T> : BaseItem where T : Data {
 
 	public void Copy(BaseItem<T> from) {
 		name = from.name + " (Copy)";
+	}
+
+	public override void Refresh() {
+		base.Refresh();
+		name = _data.name;
 	}
 
 }

@@ -9,4 +9,8 @@ public class LineItem : BaseItem<Line> {
 		set { data = value; }
 	}
 
+	protected override Color GetBGColor() {
+		return Color.white;
+	}
+
 }
