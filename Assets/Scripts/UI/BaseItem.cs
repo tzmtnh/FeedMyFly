@@ -7,7 +7,7 @@ public abstract class BaseItem : MonoBehaviour {
 
 	Image _bgImage;
 	Color _bgColor;
-	protected InputField _nameInput;
+	public InputField nameInput;
 
 	bool _selected = false;
 	public bool selected {
@@ -23,7 +23,6 @@ public abstract class BaseItem : MonoBehaviour {
 	void Awake() {
 		_bgImage = GetComponent<Image>();
 		_bgColor = _bgImage.color;
-		_nameInput = GetComponentInChildren<InputField>();
 	}
 }
 
@@ -45,15 +44,21 @@ public abstract class BaseItem<T> : BaseItem where T : Data {
 		set {
 			_data.name = value;
 			gameObject.name = "Item " + value;
-			_nameInput.text = value;
+			nameInput.text = value;
 		}
 	}
 
+	public BaseView<T> view { protected get; set; }
+
+	public void OnClicked() {
+		view.OnItemClicked(this);
+	}
+
 	public void OnInputNameChanged() {
-		if (_nameInput.text.Length == 0) {
-			_nameInput.text = name;
+		if (nameInput.text.Length == 0) {
+			nameInput.text = name;
 		} else {
-			name = _nameInput.text;
+			name = nameInput.text;
 		}
 	}
 

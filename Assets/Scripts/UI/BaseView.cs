@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions;
-using UnityEngine.EventSystems;
 
 public abstract class BaseView : MonoBehaviour {
 
@@ -70,6 +68,7 @@ public abstract class BaseView<T> : BaseView where T : Data {
 		BaseItem<T> item = Instantiate(_prototypeItem, _prototypeItem.transform.parent);
 		item.gameObject.SetActive(true);
 		item.data = data;
+		item.view = this;
 		_items.Add(item);
 		selectedItem = item;
 		return item;
@@ -117,15 +116,7 @@ public abstract class BaseView<T> : BaseView where T : Data {
 
 	const float DOUBLE_CLICK_THRESH = 0.3f;
 	float _lastItemClickTime;
-	public void OnItemClicked() {
-		GameObject go = EventSystem.current.currentSelectedGameObject;
-		BaseItem<T> item = go.GetComponent<BaseItem<T>>();
-		if (item == null) {
-			item = go.GetComponentInParent<BaseItem<T>>();
-			Assert.IsNotNull(item);
-			EventSystem.current.SetSelectedGameObject(item.gameObject);
-		}
-
+	public void OnItemClicked(BaseItem<T> item) {
 		if (item.selected) {
 			float dt = Time.time - _lastItemClickTime;
 			if (dt < DOUBLE_CLICK_THRESH) {
