@@ -15,6 +15,7 @@ public abstract class BaseItem : MonoBehaviour {
 
 		set {
 			if (_selected == value) return;
+			if (_bgImage == null) return;
 			_selected = value;
 			_bgImage.color = value ? Color.yellow : _bgColor;
 		}
@@ -29,7 +30,7 @@ public abstract class BaseItem : MonoBehaviour {
 public abstract class BaseItem<T> : BaseItem where T : Data {
 
 	T _data;
-	public T data {
+	public virtual T data {
 		get { return _data; }
 		set {
 			if (_data == value) return;

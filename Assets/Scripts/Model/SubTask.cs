@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 [System.Serializable]
-public class SubTask : Data {
+public class SubTask : BaseTask {
 
 	public SubTask(string name) : base(name) { }
 
