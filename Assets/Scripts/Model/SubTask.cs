@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 [System.Serializable]
 public class SubTask : Data {
 
 	[System.NonSerialized]
 	public Task parent;
+
+	public bool done = false;
 
 	public SerializableDate date;
 
@@ -20,5 +23,22 @@ public class SubTask : Data {
 		OnChanged();
 		parent.OnSubTaskDateChanged(this);
 	}
+
+	public ViewManager.DeadlineState deadlineState {
+		get {
+			int c = date.Compare(System.DateTime.Now);
+			if (done) {
+				return ViewManager.DeadlineState.Done;
+			} else if (c > 0) {
+				return ViewManager.DeadlineState.Future;
+			} else if (c == 0) {
+				return ViewManager.DeadlineState.Today;
+			} else {
+				return ViewManager.DeadlineState.Late;
+			}
+		}
+	}
+
+	public Color color { get { return ViewManager.GetColor(deadlineState); } }
 
 }

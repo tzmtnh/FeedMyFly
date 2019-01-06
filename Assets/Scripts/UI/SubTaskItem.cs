@@ -30,15 +30,6 @@ public class SubTaskItem : BaseTaskItem<SubTask> {
 	}
 
 	protected override Color GetBGColor() {
-		int c = date.Compare(System.DateTime.Now);
-		ViewManager.DeadlineState state;
-		if (c > 0) {
-			state = ViewManager.DeadlineState.Future;
-		} else if (c == 0) {
-			state = ViewManager.DeadlineState.Today;
-		} else {
-			state = ViewManager.DeadlineState.Late;
-		}
-		return ViewManager.GetColor(state);
+		return subtask.color;
 	}
 }

@@ -35,7 +35,13 @@ public class SubTasksView : BaseView<SubTask> {
 	}
 
 	protected override void OnItemDoubleClicked(BaseItem<SubTask> item) {
-		Debug.Log("SubTask double clicked!");
+		SubTaskItem subtaskItem = (SubTaskItem)item;
+		if (subtaskItem.subtask.deadlineState == ViewManager.DeadlineState.Future) {
+			return;
+		}
+
+		subtaskItem.subtask.done = !subtaskItem.subtask.done;
+		subtaskItem.Refresh();
 	}
 
 	protected override void Awake() {
