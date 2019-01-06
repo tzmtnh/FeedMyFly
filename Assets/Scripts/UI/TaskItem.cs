@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BaseTask<T> : BaseItem<T> where T : BaseTask {
+public abstract class BaseTaskItem<T> : BaseItem<T> where T : Data {
 
 	public Text dateText;
 
@@ -19,25 +19,50 @@ public class BaseTask<T> : BaseItem<T> where T : BaseTask {
 		}
 	}
 
-	protected void OnDateChanged() {
-		dateText.text = data.date.ToString();
+	public abstract SerializableDate date { get; }
+
+	public void OnDateChanged() {
+		if (date == null) return;
+		dateText.text = date.ToString();
 	}
 
-	public void OnDateClicked() {
-		OnClicked();
-		data.date.AddDays(1);
-		OnDateChanged();
-	}
+	public abstract void OnDateClicked();
 
 }
 
-public class TaskItem : BaseTask<Task> {
+public class TaskItem : BaseTaskItem<Task> {
 
 	public Text tasksText;
 
-	public Task task {
-		get { return data; }
-		set { data = value; }
+	public Task task { get { return data; } }
+
+	public override Task data {
+		get {
+			return base.data;
+		}
+
+		set {
+			base.data = value;
+			tasksText.text = "(" + task.subtasks.Count + ")";
+		}
+	}
+
+	public override SerializableDate date {
+		get {
+			if (task.subtasks.Count == 0)
+				return null;
+			return task.subtasks.Last.date;
+		}
+	}
+
+	public override void OnDateClicked() {
+		OnClicked();
+		if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
+			task.subtasks.Last.AddDays(-1);
+		} else {
+			task.subtasks.Last.AddDays(1);
+		}
+		OnDateChanged();
 	}
 
 }

@@ -129,6 +129,8 @@ public abstract class BaseView<T> : BaseView where T : Data {
 		_lastItemClickTime = Time.time;
 	}
 
+	public virtual void RefreshItems() { }
+
 	protected virtual void Awake() {
 		_prototypeItem = GetComponentInChildren<BaseItem<T>>();
 		_prototypeItem.gameObject.SetActive(false);

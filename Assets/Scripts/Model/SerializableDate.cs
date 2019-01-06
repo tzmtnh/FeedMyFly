@@ -6,32 +6,32 @@ using UnityEngine;
 [Serializable]
 public class SerializableDate : ISerializationCallbackReceiver {
 
-	DateTime _dateTime;
+	public DateTime dateTime { get; set; }
 
 	public int year;
 	public int month;
 	public int day;
 
 	public SerializableDate() {
-		_dateTime = DateTime.Now;
+		dateTime = DateTime.Now;
 	}
 
 	public void OnBeforeSerialize() {
-		year = _dateTime.Year;
-		month = _dateTime.Month;
-		day = _dateTime.Day;
+		year = dateTime.Year;
+		month = dateTime.Month;
+		day = dateTime.Day;
 	}
 
 	public void OnAfterDeserialize() {
-		_dateTime = new DateTime(year, month, day);
+		dateTime = new DateTime(year, month, day);
 	}
 
 	public void AddDays(int days) {
-		_dateTime = _dateTime.AddDays(days);
+		dateTime = dateTime.AddDays(days);
 	}
 
 	public override string ToString() {
-		return _dateTime.ToShortDateString();
+		return dateTime.ToShortDateString();
 	}
 
 }
