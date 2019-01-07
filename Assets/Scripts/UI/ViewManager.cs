@@ -64,6 +64,7 @@ public class ViewManager : MonoBehaviour {
 
 		BaseView[] views = GetComponentsInChildren<BaseView>(true);
 		foreach (BaseView view in views) {
+			view.gameObject.SetActive(true);
 			view.gameObject.SetActive(false);
 			_views.Add(view.label, view);
 		}

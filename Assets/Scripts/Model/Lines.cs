@@ -35,7 +35,7 @@ public class Lines {
 	}
 
 	public static Lines load(string filename) {
-		if (File.Exists(filename) == false) return null;
+		if (File.Exists(filename) == false) return new Lines();
 
 		using (StreamReader streamReader = File.OpenText(filename)) {
 			string jsonString = streamReader.ReadToEnd();
