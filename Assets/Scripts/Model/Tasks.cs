@@ -7,6 +7,14 @@ public class Tasks {
 
 	public int Count { get { return list.Count; } }
 
+	public Task Last {
+		get {
+			if (Count == 0)
+				return null;
+			return list[Count - 1];
+		}
+	}
+
 	public void Add(Task task) {
 		list.Add(task);
 	}

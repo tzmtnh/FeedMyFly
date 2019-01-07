@@ -24,9 +24,8 @@ public abstract class BaseItem : MonoBehaviour {
 
 	public virtual void Refresh() {
 		Color bgColor = GetBGColor();
-		if (selected == false) {
-			bgColor *= 0.8f;
-			bgColor.a = 1;
+		if (selected) {
+			bgColor = Color.Lerp(bgColor, Color.white, 0.3f);
 		}
 		_bgImage.color = bgColor;
 	}

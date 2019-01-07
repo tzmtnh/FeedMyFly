@@ -10,7 +10,7 @@ public class LineItem : BaseItem<Line> {
 	}
 
 	protected override Color GetBGColor() {
-		return Color.white;
+		return line.color;
 	}
 
 }

@@ -9,6 +9,24 @@ public class Task : Data, ISerializationCallbackReceiver {
 
 	public SubTasks subtasks;
 
+	public bool done {
+		get {
+			if (subtasks.Count == 0)
+				return false;
+			return subtasks.Last.done;
+		}
+	}
+
+	public Color color {
+		get {
+			foreach (SubTask subtask in subtasks) {
+				if (subtask.done) continue;
+				return subtask.color;
+			}
+			return ViewManager.GetColor(ViewManager.DeadlineState.Done);
+		}
+	}
+
 	public Task(string name) : base(name) {
 		subtasks = new SubTasks();
 		subtasks.parent = this;

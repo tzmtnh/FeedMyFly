@@ -54,12 +54,7 @@ public class TaskItem : BaseTaskItem<Task> {
 	}
 
 	protected override Color GetBGColor() {
-		foreach (SubTask subtask in task.subtasks) {
-			if (subtask.done) continue;
-			return subtask.color;
-		}
-
-		return ViewManager.GetColor(ViewManager.DeadlineState.Done);
+		return task.color;
 	}
 
 }
