@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public abstract class BaseView : MonoBehaviour {
 
@@ -58,6 +60,23 @@ public abstract class BaseView<T> : BaseView where T : Data {
 		return uniqueName;
 	}
 
+	RectTransform _itemsRectTransform;
+	RectTransform _viewportRectTransform;
+	Vector2 _itemsRectPosition;
+
+	void UpdateItemsRect() {
+		if (_items.Count == 0) return;
+		float height = _items[0].height * _items.Count;
+		_itemsRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+	}
+
+	public void Drag(PointerEventData eventData) {
+		float max = _viewportRectTransform.rect.y - _itemsRectTransform.rect.y;
+		_itemsRectPosition.y += eventData.delta.y;
+		_itemsRectPosition.y = Mathf.Clamp(_itemsRectPosition.y, 0, max);
+		_itemsRectTransform.anchoredPosition = _itemsRectPosition;
+	}
+
 	protected abstract T CreateData();
 
 	protected BaseItem<T> CreateItem(T data = null) {
@@ -70,6 +89,7 @@ public abstract class BaseView<T> : BaseView where T : Data {
 		item.data = data;
 		item.view = this;
 		_items.Add(item);
+		UpdateItemsRect();
 		selectedItem = item;
 		return item;
 	}
@@ -77,6 +97,7 @@ public abstract class BaseView<T> : BaseView where T : Data {
 	protected virtual void DeleteItem(BaseItem<T> item) {
 		int index = _items.IndexOf(item);
 		_items.Remove(item);
+		UpdateItemsRect();
 		Destroy(item.gameObject);
 		
 		if (_items.Count > 0)
@@ -139,5 +160,9 @@ public abstract class BaseView<T> : BaseView where T : Data {
 	protected virtual void Awake() {
 		_prototypeItem = GetComponentInChildren<BaseItem<T>>();
 		_prototypeItem.gameObject.SetActive(false);
+
+		_viewportRectTransform = _prototypeItem.transform.parent.parent.GetComponent<RectTransform>();
+		_itemsRectTransform = _prototypeItem.transform.parent.GetComponent<RectTransform>();
+		_itemsRectPosition = _itemsRectTransform.anchoredPosition;
 	}
 }
