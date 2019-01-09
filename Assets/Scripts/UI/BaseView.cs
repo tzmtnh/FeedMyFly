@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public abstract class BaseView : MonoBehaviour {
@@ -71,7 +70,7 @@ public abstract class BaseView<T> : BaseView where T : Data {
 	}
 
 	public void Drag(PointerEventData eventData) {
-		float max = _viewportRectTransform.rect.y - _itemsRectTransform.rect.y;
+		float max = Mathf.Max(0, _viewportRectTransform.rect.y - _itemsRectTransform.rect.y);
 		_itemsRectPosition.y += eventData.delta.y;
 		_itemsRectPosition.y = Mathf.Clamp(_itemsRectPosition.y, 0, max);
 		_itemsRectTransform.anchoredPosition = _itemsRectPosition;
