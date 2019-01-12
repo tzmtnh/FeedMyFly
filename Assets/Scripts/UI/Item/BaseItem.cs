@@ -4,10 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public abstract class BaseItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerUpHandler {
+public abstract class BaseItem : ScrollItem {
 
 	Image _bgImage;
-	RectTransform _rectTransform;
 
 	public InputField nameInput;
 
@@ -23,9 +22,6 @@ public abstract class BaseItem : MonoBehaviour, IBeginDragHandler, IDragHandler,
 		}
 	}
 
-	public float width { get { return _rectTransform.rect.width; } }
-	public float height { get { return _rectTransform.rect.height; } }
-
 	protected abstract Color GetBGColor();
 
 	public virtual void Refresh() {
@@ -36,32 +32,10 @@ public abstract class BaseItem : MonoBehaviour, IBeginDragHandler, IDragHandler,
 		_bgImage.color = bgColor;
 	}
 
-	void Awake() {
+	protected override void Awake() {
+		base.Awake();
 		_bgImage = GetComponent<Image>();
-		_rectTransform = GetComponent<RectTransform>();
 	}
-
-	bool _beingDragged = false;
-	public void OnBeginDrag(PointerEventData eventData) {
-		_beingDragged = true;
-	}
-
-	public void OnDrag(PointerEventData eventData) {
-		Drag(eventData);
-	}
-
-	public void OnEndDrag(PointerEventData eventData) {
-		_beingDragged = false;
-	}
-
-	public void OnPointerUp(PointerEventData eventData) {
-		if (_beingDragged) return;
-		OnClicked();
-	}
-
-	protected virtual void Drag(PointerEventData eventData) { }
-
-	public virtual void OnClicked() { }
 }
 
 public abstract class BaseItem<T> : BaseItem where T : Data {
@@ -99,10 +73,6 @@ public abstract class BaseItem<T> : BaseItem where T : Data {
 		} else {
 			name = nameInput.text;
 		}
-	}
-
-	protected override void Drag(PointerEventData eventData) {
-		view.Drag(eventData);
 	}
 
 	public void Copy(BaseItem<T> from) {
