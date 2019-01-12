@@ -46,7 +46,7 @@ public class SubTasksView : BaseView<SubTask> {
 
 	protected override void Awake() {
 		base.Awake();
-		_taskNameText = transform.Find("Text Task Name").GetComponent<Text>();
+		_taskNameText = transform.Find("Text Title").GetComponent<Text>();
 	}
 
 }

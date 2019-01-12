@@ -103,7 +103,7 @@ public abstract class BaseView<T> : BaseView where T : Data {
 		_items.Clear();
 	}
 
-	public void OnAddClicked() {
+	public virtual void OnAddClicked() {
 		CreateItem();
 	}
 

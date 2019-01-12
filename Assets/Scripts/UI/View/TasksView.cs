@@ -6,6 +6,14 @@ using UnityEngine.UI;
 public class TasksView : BaseView<Task> {
 
 	Line _line;
+	public Line line {
+		set {
+			_line = value;
+			_lineNameText.text = _line.name;
+			LoadTasks();
+		}
+	}
+
 	Text _lineNameText;
 
 	protected override string namePrefix { get { return "Task"; } }
@@ -28,19 +36,21 @@ public class TasksView : BaseView<Task> {
 		}
 	}
 
-	public void SetLine(Line line) {
-		_line = line;
-		_lineNameText.text = line.name;
-		LoadTasks();
-	}
-
 	protected override void OnItemDoubleClicked(BaseItem<Task> item) {
 		ViewManager.inst.ShowSubTasksView(item.data);
 	}
 
+	public void AddTask(Task task) {
+		CreateItem(task);
+	}
+
+	public override void OnAddClicked() {
+		ViewManager.inst.ShowSelectTaskView(_line);
+	}
+
 	protected override void Awake() {
 		base.Awake();
-		_lineNameText = transform.Find("Text Line Name").GetComponent<Text>();
+		_lineNameText = transform.Find("Text Title").GetComponent<Text>();
 	}
 
 }

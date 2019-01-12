@@ -6,7 +6,7 @@ public class ViewManager : MonoBehaviour {
 
 	public static ViewManager inst;
 
-	public enum ViewLabel { Lines, Tasks, SubTasks }
+	public enum ViewLabel { Lines, Tasks, SubTasks, SelectTask, EditTasks, EditSubTasks }
 
 	public enum DeadlineState { Future, Today, Late, Done }
 	public Color colorFuture = Color.green;
@@ -35,13 +35,26 @@ public class ViewManager : MonoBehaviour {
 	public void ShowTasksView(Line line) {
 		currentView = ViewLabel.Tasks;
 		TasksView view = (TasksView)_views[ViewLabel.Tasks];
-		view.SetLine(line);
+		view.line = line;
 	}
 
 	public void ShowSubTasksView(Task task) {
 		currentView = ViewLabel.SubTasks;
 		SubTasksView view = (SubTasksView)_views[ViewLabel.SubTasks];
 		view.SetTask(task);
+	}
+
+	public void ShowSelectTaskView(Line line) {
+		currentView = ViewLabel.SelectTask;
+		SelectTaskView view = (SelectTaskView)_views[ViewLabel.SelectTask];
+		view.line = line;
+	}
+
+	public void OnTaskSelected(Line line, Task task) {
+		currentView = ViewLabel.Tasks;
+		TasksView view = (TasksView)_views[ViewLabel.Tasks];
+		view.line = line;
+		view.AddTask(task);
 	}
 
 	void Save() {
