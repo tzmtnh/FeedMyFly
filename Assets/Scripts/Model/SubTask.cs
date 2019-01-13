@@ -18,6 +18,10 @@ public class SubTask : Data {
 		date = new SerializableDate();
 	}
 
+	public SubTask(SubTask copyFrom) : base(copyFrom.name) {
+		date = new SerializableDate();
+	}
+
 	public void AddDays(int days) {
 		date.AddDays(days);
 		OnChanged();

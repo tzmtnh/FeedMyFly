@@ -32,6 +32,15 @@ public class Task : Data, ISerializationCallbackReceiver {
 		subtasks.parent = this;
 	}
 
+	public Task(Task copyFrom) : base(copyFrom.name) {
+		subtasks = new SubTasks();
+		subtasks.parent = this;
+
+		foreach (SubTask subtask in copyFrom.subtasks) {
+			subtasks.Add(new SubTask(subtask));
+		}
+	}
+
 	public void OnBeforeSerialize() { }
 
 	public void OnAfterDeserialize() {

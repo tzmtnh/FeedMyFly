@@ -41,7 +41,9 @@ public class TasksView : BaseView<Task> {
 	}
 
 	public void AddTask(Task task) {
-		CreateItem(task);
+		Task copy = new Task(task);
+		_line.tasks.Add(copy);
+		CreateItem(copy);
 	}
 
 	public override void OnAddClicked() {
