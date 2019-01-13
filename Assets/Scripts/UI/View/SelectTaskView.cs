@@ -27,8 +27,12 @@ public class SelectTaskView : BaseView<Task> {
 
 		Tasks.saveFileName = Path.Combine(Application.persistentDataPath, "Tasks.json");
 		tasks = Tasks.load();
+	}
 
-		foreach (Task task in tasks) {
+	public override void Show() {
+		base.Show();
+		ClearItems();
+		foreach (Task task in SelectTaskView.tasks) {
 			CreateItem(task);
 		}
 	}

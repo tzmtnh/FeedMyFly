@@ -15,7 +15,9 @@ public class EditTasksView : BaseView<Task> {
 		ViewManager.inst.ShowEditSubTasksView(item.data);
 	}
 
-	void Start() {
+	public override void Show() {
+		base.Show();
+		ClearItems();
 		foreach (Task task in SelectTaskView.tasks) {
 			CreateItem(task);
 		}

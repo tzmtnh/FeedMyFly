@@ -38,7 +38,7 @@ public class Tasks {
 		}
 
 		using (StreamWriter streamWriter = File.CreateText(saveFileName)) {
-			string jsonString = JsonUtility.ToJson(this);
+			string jsonString = JsonUtility.ToJson(this, true);
 			streamWriter.Write(jsonString);
 		}
 	}
