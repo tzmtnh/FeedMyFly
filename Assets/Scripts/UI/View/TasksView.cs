@@ -9,12 +9,10 @@ public class TasksView : BaseView<Task> {
 	public Line line {
 		set {
 			_line = value;
-			_lineNameText.text = _line.name;
+			title = _line.name;
 			LoadTasks();
 		}
 	}
-
-	Text _lineNameText;
 
 	protected override string namePrefix { get { return "Task"; } }
 
@@ -48,11 +46,6 @@ public class TasksView : BaseView<Task> {
 
 	public override void OnAddClicked() {
 		ViewManager.inst.ShowSelectTaskView(_line);
-	}
-
-	protected override void Awake() {
-		base.Awake();
-		_lineNameText = transform.Find("Text Title").GetComponent<Text>();
 	}
 
 }

@@ -6,7 +6,13 @@ using UnityEngine.UI;
 public class SubTasksView : BaseView<SubTask> {
 
 	Task _task;
-	Text _taskNameText;
+	public Task task {
+		set {
+			_task = value;
+			title = _task.name;
+			LoadSubTasks();
+		}
+	}
 
 	protected override string namePrefix { get { return "SubTask"; } }
 
@@ -28,12 +34,6 @@ public class SubTasksView : BaseView<SubTask> {
 		}
 	}
 
-	public void SetTask(Task task) {
-		_task = task;
-		_taskNameText.text = task.name;
-		LoadSubTasks();
-	}
-
 	protected override void OnItemDoubleClicked(BaseItem<SubTask> item) {
 		SubTaskItem subtaskItem = (SubTaskItem)item;
 		if (subtaskItem.subtask.deadlineState == ViewManager.DeadlineState.Future) {
@@ -42,11 +42,6 @@ public class SubTasksView : BaseView<SubTask> {
 
 		subtaskItem.subtask.done = !subtaskItem.subtask.done;
 		subtaskItem.Refresh();
-	}
-
-	protected override void Awake() {
-		base.Awake();
-		_taskNameText = transform.Find("Text Title").GetComponent<Text>();
 	}
 
 }

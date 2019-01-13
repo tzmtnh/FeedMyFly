@@ -10,7 +10,7 @@ public abstract class BaseItem : ScrollItem {
 
 	public InputField nameInput;
 
-	bool _selected = false;
+	protected bool _selected = false;
 	public bool selected {
 		get { return _selected; }
 
@@ -82,6 +82,7 @@ public abstract class BaseItem<T> : BaseItem where T : Data {
 	public override void Refresh() {
 		base.Refresh();
 		name = _data.name;
+		nameInput.textComponent.fontStyle = _selected ? FontStyle.Bold : FontStyle.Normal;
 	}
 
 }

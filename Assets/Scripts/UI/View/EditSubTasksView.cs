@@ -3,17 +3,37 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EditSubTasksView : BaseView<SubTask> {
-	protected override string namePrefix {
-		get {
-			throw new System.NotImplementedException();
+
+	Task _task;
+	public Task task {
+		set {
+			_task = value;
+			title = _task.name;
+			LoadSubTasks();
 		}
 	}
 
+	protected override string namePrefix { get { return "SubTask"; } }
+
 	protected override SubTask CreateData() {
-		throw new System.NotImplementedException();
+		SubTask subtask = new SubTask(GetUniqueName());
+		_task.subtasks.Add(subtask);
+		return subtask;
 	}
 
 	protected override void OnItemDoubleClicked(BaseItem<SubTask> item) {
-		throw new System.NotImplementedException();
+		
+	}
+
+	protected override void DeleteItem(BaseItem<SubTask> item) {
+		_task.subtasks.Remove(item.data);
+		base.DeleteItem(item);
+	}
+
+	void LoadSubTasks() {
+		ClearItems();
+		foreach (SubTask subtask in _task.subtasks) {
+			CreateItem(subtask);
+		}
 	}
 }

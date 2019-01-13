@@ -1,19 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class SelectTaskView : BaseView<Task> {
 
 	Line _line;
 	public Line line { set { _line = value; } }
 
-	Tasks _tasks = new Tasks();
+	public static Tasks tasks = new Tasks();
 
 	protected override string namePrefix { get { return "Task"; } }
 
 	protected override Task CreateData() {
 		Task task = new Task(GetUniqueName());
-		_tasks.Add(task);
+		tasks.Add(task);
 		return task;
 	}
 
@@ -23,8 +24,12 @@ public class SelectTaskView : BaseView<Task> {
 
 	protected override void Awake() {
 		base.Awake();
-		CreateItem();
-		CreateItem();
-		CreateItem();
+
+		Tasks.saveFileName = Path.Combine(Application.persistentDataPath, "Tasks.json");
+		tasks = Tasks.load();
+
+		foreach (Task task in tasks) {
+			CreateItem(task);
+		}
 	}
 }

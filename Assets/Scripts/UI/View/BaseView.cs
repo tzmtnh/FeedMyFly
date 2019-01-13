@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public abstract class BaseView : MonoBehaviour {
@@ -19,6 +20,9 @@ public abstract class BaseView : MonoBehaviour {
 public abstract class BaseView<T> : BaseView where T : Data {
 
 	ScrollPanel _scrollPanel;
+
+	Text _titleText;
+	public string title { set { _titleText.text = value; } }
 
 	BaseItem<T> _prototypeItem;
 	protected List<BaseItem<T>> _items = new List<BaseItem<T>>();
@@ -145,5 +149,6 @@ public abstract class BaseView<T> : BaseView where T : Data {
 		_prototypeItem = GetComponentInChildren<BaseItem<T>>();
 		_prototypeItem.gameObject.SetActive(false);
 		_scrollPanel = GetComponentInChildren<ScrollPanel>();
+		_titleText = transform.Find("Text Title").GetComponent<Text>();
 	}
 }

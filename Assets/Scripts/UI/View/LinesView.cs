@@ -5,19 +5,18 @@ using UnityEngine;
 
 public class LinesView : BaseView<Line> {
 
-	string _saveFileName;
-	Lines _lines = new Lines();
+	public static Lines lines = new Lines();
 
 	protected override string namePrefix { get { return "Line"; } }
 
 	protected override Line CreateData() {
 		Line line = new Line(GetUniqueName());
-		_lines.Add(line);
+		lines.Add(line);
 		return line;
 	}
 
 	protected override void DeleteItem(BaseItem<Line> item) {
-		_lines.Remove(item.data);
+		lines.Remove(item.data);
 		base.DeleteItem(item);
 	}
 
@@ -25,17 +24,13 @@ public class LinesView : BaseView<Line> {
 		ViewManager.inst.ShowTasksView(item.data);
 	}
 
-	public void Save() {
-		_lines.Save(_saveFileName);
-	}
-
 	protected override void Awake() {
 		base.Awake();
 
-		_saveFileName = Path.Combine(Application.persistentDataPath, "Lines.json");
-		_lines = Lines.load(_saveFileName);
+		Lines.saveFileName = Path.Combine(Application.persistentDataPath, "Lines.json");
+		lines = Lines.load();
 
-		foreach (Line line in _lines) {
+		foreach (Line line in lines) {
 			CreateItem(line);
 		}
 	}

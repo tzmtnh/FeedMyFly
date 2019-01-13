@@ -41,7 +41,17 @@ public class ViewManager : MonoBehaviour {
 	public void ShowSubTasksView(Task task) {
 		currentView = ViewLabel.SubTasks;
 		SubTasksView view = (SubTasksView)_views[ViewLabel.SubTasks];
-		view.SetTask(task);
+		view.task = task;
+	}
+
+	public void ShowEditTasksView() {
+		currentView = ViewLabel.EditTasks;
+	}
+
+	public void ShowEditSubTasksView(Task task) {
+		currentView = ViewLabel.EditSubTasks;
+		EditSubTasksView view = (EditSubTasksView)_views[ViewLabel.EditSubTasks];
+		view.task = task;
 	}
 
 	public void ShowSelectTaskView(Line line) {
@@ -58,8 +68,8 @@ public class ViewManager : MonoBehaviour {
 	}
 
 	void Save() {
-		LinesView linesView = (LinesView)_views[ViewLabel.Lines];
-		linesView.Save();
+		SelectTaskView.tasks.Save();
+		LinesView.lines.Save();
 	}
 
 	public static Color GetColor(DeadlineState state) {
@@ -93,6 +103,15 @@ public class ViewManager : MonoBehaviour {
 					break;
 				case ViewLabel.SubTasks:
 					currentView = ViewLabel.Tasks;
+					break;
+				case ViewLabel.SelectTask:
+					currentView = ViewLabel.Tasks;
+					break;
+				case ViewLabel.EditTasks:
+					currentView = ViewLabel.Lines;
+					break;
+				case ViewLabel.EditSubTasks:
+					currentView = ViewLabel.EditTasks;
 					break;
 			}
 		}

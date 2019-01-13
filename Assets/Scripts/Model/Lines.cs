@@ -5,6 +5,7 @@ using UnityEngine;
 
 [System.Serializable]
 public class Lines {
+	public static string saveFileName;
 	public List<Line> list = new List<Line>();
 
 	public int Count { get { return list.Count; } }
@@ -23,21 +24,21 @@ public class Lines {
 		}
 	}
 
-	public void Save(string filename) {
-		if (File.Exists(filename)) {
-			File.Delete(filename);
+	public void Save() {
+		if (File.Exists(saveFileName)) {
+			File.Delete(saveFileName);
 		}
 
-		using (StreamWriter streamWriter = File.CreateText(filename)) {
+		using (StreamWriter streamWriter = File.CreateText(saveFileName)) {
 			string jsonString = JsonUtility.ToJson(this);
 			streamWriter.Write(jsonString);
 		}
 	}
 
-	public static Lines load(string filename) {
-		if (File.Exists(filename) == false) return new Lines();
+	public static Lines load() {
+		if (File.Exists(saveFileName) == false) return new Lines();
 
-		using (StreamReader streamReader = File.OpenText(filename)) {
+		using (StreamReader streamReader = File.OpenText(saveFileName)) {
 			string jsonString = streamReader.ReadToEnd();
 			return JsonUtility.FromJson<Lines>(jsonString);
 		}
