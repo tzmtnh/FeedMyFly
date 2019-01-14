@@ -4,10 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-[System.Serializable]
+[Serializable]
 public class Task : Data, ISerializationCallbackReceiver {
 
 	public SubTasks subtasks;
+
+	public override SerializableDate date {
+		get {
+			if (subtasks.Count == 0)
+				return null;
+			return subtasks.Last.date;
+		}
+	}
 
 	public bool done {
 		get {

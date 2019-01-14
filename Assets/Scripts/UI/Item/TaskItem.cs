@@ -8,14 +8,12 @@ public abstract class BaseTaskItem<T> : BaseItem<T> where T : Data {
 
 	public Text dateText;
 
-	public abstract SerializableDate date { get; }
-
 	public override void Refresh() {
 		base.Refresh();
-		if (date == null) {
+		if (data.date == null) {
 			dateText.text = "??/??/????";
 		} else {
-			dateText.text = date.ToString();
+			dateText.text = data.date.ToString();
 		}
 	}
 
@@ -28,14 +26,6 @@ public class TaskItem : BaseTaskItem<Task> {
 	public Text tasksText;
 
 	public Task task { get { return data; } }
-
-	public override SerializableDate date {
-		get {
-			if (task.subtasks.Count == 0)
-				return null;
-			return task.subtasks.Last.date;
-		}
-	}
 
 	public override void OnDateClicked() {
 		OnClicked();

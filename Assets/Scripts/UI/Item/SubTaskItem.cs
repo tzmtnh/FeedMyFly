@@ -9,12 +9,6 @@ public class SubTaskItem : BaseTaskItem<SubTask> {
 
 	public SubTask subtask { get { return data; } }
 
-	public override SerializableDate date {
-		get {
-			return subtask.date;
-		}
-	}
-
 	public override void OnDateClicked() {
 		OnClicked();
 		if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {

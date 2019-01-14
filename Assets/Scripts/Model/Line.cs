@@ -25,6 +25,14 @@ public class Line : Data {
 		}
 	}
 
+	public override SerializableDate date {
+		get {
+			if (tasks.Count == 0)
+				return null;
+			return tasks.Last.date;
+		}
+	}
+
 	public Line(string name) : base(name) {
 		tasks = new Tasks();
 	}

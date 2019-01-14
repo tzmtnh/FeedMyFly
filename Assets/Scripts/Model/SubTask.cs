@@ -10,16 +10,18 @@ public class SubTask : Data {
 
 	public bool done = false;
 
-	public SerializableDate date;
+	[SerializeField]
+	SerializableDate _date;
+	public override SerializableDate date { get { return _date; } }
 
 	public int Offset { get { return 2; } }
 
 	public SubTask(string name) : base(name) {
-		date = new SerializableDate();
+		_date = new SerializableDate();
 	}
 
 	public SubTask(SubTask copyFrom) : base(copyFrom.name) {
-		date = new SerializableDate();
+		_date = new SerializableDate();
 	}
 
 	public void AddDays(int days) {

@@ -10,6 +10,18 @@ public class Tasks {
 
 	public int Count { get { return list.Count; } }
 
+	public int DoneCount {
+		get {
+			int count = 0;
+			foreach (Task task in list) {
+				if (task.done) {
+					count++;
+				}
+			}
+			return count;
+		}
+	}
+
 	public Task Last {
 		get {
 			if (Count == 0)
