@@ -10,10 +10,12 @@ public abstract class BaseTaskItem<T> : BaseItem<T> where T : Data {
 
 	public override void Refresh() {
 		base.Refresh();
-		if (data.date == null) {
-			dateText.text = "??/??/????";
-		} else {
-			dateText.text = data.date.ToString();
+		if (dateText != null) {
+			if (data.date == null) {
+				dateText.text = "??/??/????";
+			} else {
+				dateText.text = data.date.ToString();
+			}
 		}
 	}
 
@@ -40,7 +42,7 @@ public class TaskItem : BaseTaskItem<Task> {
 
 	public override void Refresh() {
 		base.Refresh();
-		tasksText.text = "(" + task.subtasks.Count + ")";
+		tasksText.text = "(" + task.subtasks.DoneCount + "/" + task.subtasks.Count + ")";
 	}
 
 	protected override Color GetBGColor() {

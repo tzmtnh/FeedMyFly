@@ -11,6 +11,18 @@ public class SubTasks {
 
 	public int Count { get { return list.Count; } }
 
+	public int DoneCount {
+		get {
+			int count = 0;
+			foreach (SubTask subtask in list) {
+				if (subtask.done) {
+					count++;
+				}
+			}
+			return count;
+		}
+	}
+
 	public void Add(SubTask subtask) {
 		list.Add(subtask);
 		subtask.parent = parent;
