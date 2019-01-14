@@ -31,13 +31,6 @@ public class TaskItem : BaseTaskItem<Task> {
 
 	public override void OnDateClicked() {
 		OnClicked();
-		if (task.subtasks.Count == 0) return;
-		if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
-			task.subtasks.Last.AddDays(-1);
-		} else {
-			task.subtasks.Last.AddDays(1);
-		}
-		task.OnChanged();
 	}
 
 	public override void Refresh() {

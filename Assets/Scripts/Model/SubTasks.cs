@@ -25,7 +25,6 @@ public class SubTasks {
 
 	public void Add(SubTask subtask) {
 		list.Add(subtask);
-		subtask.parent = parent;
 	}
 
 	public void Remove(SubTask subtask) {

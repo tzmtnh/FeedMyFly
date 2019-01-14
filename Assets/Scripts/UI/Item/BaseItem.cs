@@ -28,7 +28,9 @@ public abstract class BaseItem : ScrollItem {
 	public virtual void Refresh() {
 		Color bgColor = GetBGColor();
 		if (selected) {
-			bgColor = Color.Lerp(bgColor, Color.white, 0.3f);
+			bgColor = Color.Lerp(bgColor, Color.white, 0f);
+		} else {
+			bgColor = Color.Lerp(bgColor, Color.black, 0.2f);
 		}
 		_bgImage.color = bgColor;
 	}

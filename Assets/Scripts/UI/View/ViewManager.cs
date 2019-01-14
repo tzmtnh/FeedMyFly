@@ -6,7 +6,7 @@ public class ViewManager : MonoBehaviour {
 
 	public static ViewManager inst;
 
-	public enum ViewLabel { Lines, Tasks, SubTasks, SelectTask, EditTasks, EditSubTasks }
+	public enum ViewLabel { Lines, Tasks, SubTasks, SelectTask, EditTasks, EditSubTasks, SelectDate }
 
 	public enum DeadlineState { Future, Today, Late, Done }
 	public Color colorFuture = Color.green;
@@ -14,15 +14,21 @@ public class ViewManager : MonoBehaviour {
 	public Color colorLate = Color.red;
 	public Color colorDone = Color.gray;
 
-	BaseView _currentView;
+	bool _storePrevView = true;
+	Stack<ViewLabel> _prevViews = new Stack<ViewLabel>(8);
+	BaseView _currentView = null;
 	public ViewLabel currentView {
 		get { return _currentView.label; }
 
 		set {
 			BaseView view = _views[value];
 			if (view != _currentView) {
-				if (_currentView != null)
+				if (_currentView != null) {
 					_currentView.Hide();
+					if (_storePrevView) {
+						_prevViews.Push(_currentView.label);
+					}
+				}
 
 				_currentView = view;
 				_currentView.Show();
@@ -67,6 +73,19 @@ public class ViewManager : MonoBehaviour {
 		view.AddTask(task);
 	}
 
+	public void ShowSelectDateView(SerializableDate date) {
+		currentView = ViewLabel.SelectDate;
+		SelectDateView view = (SelectDateView)_views[ViewLabel.SelectDate];
+		view.date = date;
+	}
+
+	public void GoBack() {
+		if (_prevViews.Count == 0) return;
+		_storePrevView = false;
+		currentView = _prevViews.Pop();
+		_storePrevView = true;
+	}
+
 	void Save() {
 		SelectTaskView.tasks.Save();
 		LinesView.lines.Save();
@@ -97,23 +116,7 @@ public class ViewManager : MonoBehaviour {
 
 	void Update() {
 		if (Input.GetKeyDown(KeyCode.Escape)) {
-			switch (currentView) {
-				case ViewLabel.Tasks:
-					currentView = ViewLabel.Lines;
-					break;
-				case ViewLabel.SubTasks:
-					currentView = ViewLabel.Tasks;
-					break;
-				case ViewLabel.SelectTask:
-					currentView = ViewLabel.Tasks;
-					break;
-				case ViewLabel.EditTasks:
-					currentView = ViewLabel.Lines;
-					break;
-				case ViewLabel.EditSubTasks:
-					currentView = ViewLabel.EditTasks;
-					break;
-			}
+			GoBack();
 		}
 	}
 

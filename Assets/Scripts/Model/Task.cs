@@ -51,11 +51,7 @@ public class Task : Data, ISerializationCallbackReceiver {
 
 	public void OnBeforeSerialize() { }
 
-	public void OnAfterDeserialize() {
-		foreach (SubTask subtask in subtasks) {
-			subtask.parent = this;
-		}
-	}
+	public void OnAfterDeserialize() { }
 
 	public void OnSubTaskDateChanged(SubTask subtask) {
 		Assert.IsTrue(subtasks.list.Contains(subtask));

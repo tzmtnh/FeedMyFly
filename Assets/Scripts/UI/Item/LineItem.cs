@@ -18,7 +18,7 @@ public class LineItem : BaseTaskItem<Line> {
 	}
 
 	public override void OnDateClicked() {
-		throw new System.NotImplementedException();
+		OnClicked();
 	}
 
 	protected override Color GetBGColor() {

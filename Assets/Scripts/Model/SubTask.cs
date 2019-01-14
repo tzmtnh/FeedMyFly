@@ -1,12 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
 public class SubTask : Data {
 
-	[System.NonSerialized]
-	public Task parent;
+	public event Action<SubTask> OnUpdated;
 
 	public bool done = false;
 
@@ -18,16 +18,16 @@ public class SubTask : Data {
 
 	public SubTask(string name) : base(name) {
 		_date = new SerializableDate();
+		_date.OnDateTimeChanged += OnDateTimeChanged;
 	}
 
-	public SubTask(SubTask copyFrom) : base(copyFrom.name) {
-		_date = new SerializableDate();
-	}
+	public SubTask(SubTask copyFrom) : this(copyFrom.name) { }
 
-	public void AddDays(int days) {
-		date.AddDays(days);
+	void OnDateTimeChanged() {
 		OnChanged();
-		parent.OnSubTaskDateChanged(this);
+		if (OnUpdated != null) {
+			OnUpdated(this);
+		}
 	}
 
 	public ViewManager.DeadlineState deadlineState {

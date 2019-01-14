@@ -11,11 +11,7 @@ public class SubTaskItem : BaseTaskItem<SubTask> {
 
 	public override void OnDateClicked() {
 		OnClicked();
-		if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
-			subtask.AddDays(-1);
-		} else {
-			subtask.AddDays(1);
-		}
+		ViewManager.inst.ShowSelectDateView(subtask.date);
 	}
 
 	public override void Refresh() {

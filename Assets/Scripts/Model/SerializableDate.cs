@@ -6,11 +6,25 @@ using UnityEngine;
 [Serializable]
 public class SerializableDate : ISerializationCallbackReceiver {
 
+	public event Action OnDateTimeChanged;
+
 	public int year;
 	public int month;
 	public int day;
 
-	public DateTime dateTime { get; set; }
+	DateTime _dateTime;
+	public DateTime dateTime {
+		get {
+			return _dateTime;
+		}
+
+		set {
+			_dateTime = value;
+			if (OnDateTimeChanged != null) {
+				OnDateTimeChanged();
+			}
+		}
+	}
 
 	public SerializableDate() {
 		dateTime = DateTime.Now;
