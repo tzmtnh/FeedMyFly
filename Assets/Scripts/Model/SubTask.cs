@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class SubTask : Data {
+public class SubTask : Data, ISerializationCallbackReceiver {
 
 	public event Action<SubTask> OnUpdated;
 
@@ -28,6 +28,14 @@ public class SubTask : Data {
 		if (OnUpdated != null) {
 			OnUpdated(this);
 		}
+	}
+
+	public void OnBeforeSerialize() { }
+
+	public void OnAfterDeserialize() {
+		if (_date == null) return;
+		_date.OnDateTimeChanged -= OnDateTimeChanged;
+		_date.OnDateTimeChanged += OnDateTimeChanged;
 	}
 
 	public ViewManager.DeadlineState deadlineState {

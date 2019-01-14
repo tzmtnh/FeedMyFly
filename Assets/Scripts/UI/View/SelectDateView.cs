@@ -24,7 +24,7 @@ public class SelectDateView : BaseView {
 
 	void Refresh() {
 		dayText.text = _dateTime.Day.ToString();
-		monthText.text = MONTHS[_dateTime.Month];
+		monthText.text = MONTHS[_dateTime.Month - 1];
 		yearText.text = _dateTime.Year.ToString();
 	}
 
@@ -59,7 +59,7 @@ public class SelectDateView : BaseView {
 	}
 
 	public void OnOKClicked() {
-		_date.dateTime = _dateTime;
+		_date.UpdateDate(_dateTime);
 		ViewManager.inst.GoBack();
 	}
 }

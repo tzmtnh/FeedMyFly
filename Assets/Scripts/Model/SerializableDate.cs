@@ -12,19 +12,7 @@ public class SerializableDate : ISerializationCallbackReceiver {
 	public int month;
 	public int day;
 
-	DateTime _dateTime;
-	public DateTime dateTime {
-		get {
-			return _dateTime;
-		}
-
-		set {
-			_dateTime = value;
-			if (OnDateTimeChanged != null) {
-				OnDateTimeChanged();
-			}
-		}
-	}
+	public DateTime dateTime { get; set; }
 
 	public SerializableDate() {
 		dateTime = DateTime.Now;
@@ -40,8 +28,11 @@ public class SerializableDate : ISerializationCallbackReceiver {
 		dateTime = new DateTime(year, month, day);
 	}
 
-	public void AddDays(int days) {
-		dateTime = dateTime.AddDays(days);
+	public void UpdateDate(DateTime newDateTime) {
+		dateTime = newDateTime;
+		if (OnDateTimeChanged != null) {
+			OnDateTimeChanged();
+		}
 	}
 
 	public int Compare(SerializableDate other) {

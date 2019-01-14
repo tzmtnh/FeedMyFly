@@ -4,9 +4,6 @@ using System.Collections.Generic;
 [System.Serializable]
 public class SubTasks {
 
-	[System.NonSerialized]
-	public Task parent;
-
 	public List<SubTask> list = new List<SubTask>();
 
 	public int Count { get { return list.Count; } }

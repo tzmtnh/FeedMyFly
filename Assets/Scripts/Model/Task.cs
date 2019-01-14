@@ -37,23 +37,9 @@ public class Task : Data, ISerializationCallbackReceiver {
 
 	public Task(string name) : base(name) {
 		subtasks = new SubTasks();
-		subtasks.parent = this;
 	}
 
-	public Task(Task copyFrom) : base(copyFrom.name) {
-		subtasks = new SubTasks();
-		subtasks.parent = this;
-
-		foreach (SubTask subtask in copyFrom.subtasks) {
-			subtasks.Add(new SubTask(subtask));
-		}
-	}
-
-	public void OnBeforeSerialize() { }
-
-	public void OnAfterDeserialize() { }
-
-	public void OnSubTaskDateChanged(SubTask subtask) {
+	void OnSubTaskChanged(SubTask subtask) {
 		Assert.IsTrue(subtasks.list.Contains(subtask));
 		int index = subtasks.list.IndexOf(subtask);
 
@@ -76,6 +62,24 @@ public class Task : Data, ISerializationCallbackReceiver {
 				s.OnChanged();
 				dateTime = dateTime.AddDays(s.Offset);
 			}
+		}
+	}
+
+	public Task(Task copyFrom) : base(copyFrom.name) {
+		subtasks = new SubTasks();
+
+		foreach (SubTask subtask in copyFrom.subtasks) {
+			SubTask copy = new SubTask(subtask);
+			copy.OnUpdated += OnSubTaskChanged;
+			subtasks.Add(copy);
+		}
+	}
+
+	public void OnBeforeSerialize() { }
+
+	public void OnAfterDeserialize() {
+		foreach (SubTask subtask in subtasks) {
+			subtask.OnUpdated += OnSubTaskChanged;
 		}
 	}
 
