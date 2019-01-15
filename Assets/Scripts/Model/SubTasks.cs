@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 [System.Serializable]
-public class SubTasks {
+public class SubTasks : ISerializationCallbackReceiver {
 
 	public List<SubTask> list = new List<SubTask>();
 
@@ -21,6 +22,7 @@ public class SubTasks {
 	}
 
 	public void Add(SubTask subtask) {
+		subtask.parent = this;
 		list.Add(subtask);
 	}
 
@@ -31,6 +33,14 @@ public class SubTasks {
 	public IEnumerator GetEnumerator() {
 		foreach (SubTask subtask in list) {
 			yield return subtask;
+		}
+	}
+
+	public void OnBeforeSerialize() { }
+
+	public void OnAfterDeserialize() {
+		foreach (SubTask subtask in list) {
+			subtask.parent = this;
 		}
 	}
 

@@ -16,6 +16,11 @@ public class SubTask : Data, ISerializationCallbackReceiver {
 
 	public int Offset { get { return 2; } }
 
+	[NonSerialized]
+	public SubTasks parent;
+
+	public bool IsLast { get { return this == parent.Last; } }
+
 	public SubTask(string name) : base(name) {
 		_date = new SerializableDate();
 		_date.OnDateTimeChanged += OnDateTimeChanged;

@@ -16,6 +16,7 @@ public class SubTaskItem : BaseTaskItem<SubTask> {
 
 	public override void Refresh() {
 		base.Refresh();
+		offsetText.enabled = !subtask.IsLast;
 		offsetText.text = "(" + subtask.Offset + ")";
 	}
 
