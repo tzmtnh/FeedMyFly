@@ -20,6 +20,8 @@ public class SubTaskItem : BaseTaskItem<SubTask> {
 	}
 
 	protected override Color GetBGColor() {
+		if (dateText == null)
+			return ViewManager.GetColor(ViewManager.DeadlineState.Done);
 		return subtask.color;
 	}
 }

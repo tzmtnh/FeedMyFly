@@ -39,6 +39,8 @@ public class TaskItem : BaseTaskItem<Task> {
 	}
 
 	protected override Color GetBGColor() {
+		if (dateText == null)
+			return ViewManager.GetColor(ViewManager.DeadlineState.Done);
 		return task.color;
 	}
 
