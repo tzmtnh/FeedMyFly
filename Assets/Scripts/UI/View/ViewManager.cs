@@ -6,7 +6,7 @@ public class ViewManager : MonoBehaviour {
 
 	public static ViewManager inst;
 
-	public enum ViewLabel { Lines, Tasks, SubTasks, SelectTask, EditTasks, EditSubTasks, SelectDate }
+	public enum ViewLabel { Lines, Tasks, SubTasks, SelectTask, EditTasks, EditSubTasks, SelectDate, Welcome }
 
 	public enum DeadlineState { Future, Today, Late, Done }
 	public Color colorFuture = Color.green;
@@ -79,6 +79,11 @@ public class ViewManager : MonoBehaviour {
 		view.date = date;
 	}
 
+	public void ShowLinesView() {
+		Debug.Log("Here");
+		currentView = ViewLabel.Lines;
+	}
+
 	public void GoBack() {
 		if (_prevViews.Count == 0) return;
 		_storePrevView = false;
@@ -93,11 +98,11 @@ public class ViewManager : MonoBehaviour {
 
 	public static Color GetColor(DeadlineState state) {
 		switch (state) {
-			case DeadlineState.Future:	return inst.colorFuture;
-			case DeadlineState.Today:	return inst.colorToday;
-			case DeadlineState.Late:	return inst.colorLate;
-			case DeadlineState.Done:	return inst.colorDone;
-			default:					return Color.magenta;
+			case DeadlineState.Future: return inst.colorFuture;
+			case DeadlineState.Today: return inst.colorToday;
+			case DeadlineState.Late: return inst.colorLate;
+			case DeadlineState.Done: return inst.colorDone;
+			default: return Color.magenta;
 		}
 	}
 
@@ -111,7 +116,7 @@ public class ViewManager : MonoBehaviour {
 			_views.Add(view.label, view);
 		}
 
-		currentView = ViewLabel.Lines;
+		currentView = ViewLabel.Welcome;
 	}
 
 	void Update() {

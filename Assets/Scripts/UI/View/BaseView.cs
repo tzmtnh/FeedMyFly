@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public abstract class BaseView : MonoBehaviour {
+public class BaseView : MonoBehaviour {
 
 	public ViewManager.ViewLabel label;
 
