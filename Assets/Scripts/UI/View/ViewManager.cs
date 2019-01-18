@@ -80,7 +80,6 @@ public class ViewManager : MonoBehaviour {
 	}
 
 	public void ShowLinesView() {
-		Debug.Log("Here");
 		currentView = ViewLabel.Lines;
 	}
 
@@ -116,7 +115,11 @@ public class ViewManager : MonoBehaviour {
 			_views.Add(view.label, view);
 		}
 
+#if UNITY_EDITOR
+		currentView = ViewLabel.Lines;
+#else
 		currentView = ViewLabel.Welcome;
+#endif
 	}
 
 	void Update() {
