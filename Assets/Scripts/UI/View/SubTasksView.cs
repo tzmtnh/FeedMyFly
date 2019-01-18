@@ -29,9 +29,11 @@ public class SubTasksView : BaseView<SubTask> {
 
 	void LoadSubTasks() {
 		ClearItems();
+		if (_task.subtasks.Count == 0) return;
 		foreach (SubTask subtask in _task.subtasks) {
 			CreateItem(subtask);
 		}
+		_task.subtasks.OnSubTaskChanged(_task.subtasks.list[0]);
 	}
 
 	protected override void OnItemDoubleClicked(BaseItem<SubTask> item) {
