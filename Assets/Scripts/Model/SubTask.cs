@@ -6,15 +6,24 @@ using UnityEngine;
 [System.Serializable]
 public class SubTask : Data, ISerializationCallbackReceiver {
 
-	public event Action<SubTask> OnUpdated;
-
 	public bool done = false;
 
 	[SerializeField]
 	SerializableDate _date;
 	public override SerializableDate date { get { return _date; } }
 
-	public int Offset { get { return 2; } }
+	[SerializeField]
+	int _offset = 1;
+	public int offset {
+		get { return _offset; }
+
+		set {
+			int val = Mathf.Max(0, value);
+			if (_offset == val) return;
+			_offset = val;
+			OnChanged();
+		}
+	}
 
 	[NonSerialized]
 	public SubTasks parent;
@@ -30,9 +39,6 @@ public class SubTask : Data, ISerializationCallbackReceiver {
 
 	void OnDateTimeChanged() {
 		OnChanged();
-		if (OnUpdated != null) {
-			OnUpdated(this);
-		}
 	}
 
 	public void OnBeforeSerialize() { }
