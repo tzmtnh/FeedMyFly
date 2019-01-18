@@ -11,6 +11,11 @@ public class EditTasksView : BaseView<Task> {
 		return task;
 	}
 
+	protected override void DeleteItem(BaseItem<Task> item) {
+		SelectTaskView.tasks.Remove(item.data);
+		base.DeleteItem(item);
+	}
+
 	protected override void OnItemDoubleClicked(BaseItem<Task> item) {
 		ViewManager.inst.ShowEditSubTasksView(item.data);
 	}
