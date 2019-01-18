@@ -12,11 +12,11 @@ public abstract class Data {
 		this.name = name;
 	}
 
-	public event Action<Data> OnDataChanged;
+	public event Action OnDataChanged;
 
 	public void OnChanged() {
 		if (OnDataChanged != null) {
-			OnDataChanged(this);
+			OnDataChanged();
 		}
 	}
 

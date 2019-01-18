@@ -39,6 +39,7 @@ public class SubTask : Data, ISerializationCallbackReceiver {
 
 	void OnDateTimeChanged() {
 		OnChanged();
+		parent.OnSubTaskChanged(this);
 	}
 
 	public void OnBeforeSerialize() { }
@@ -51,7 +52,7 @@ public class SubTask : Data, ISerializationCallbackReceiver {
 
 	public ViewManager.DeadlineState deadlineState {
 		get {
-			int c = date.Compare(System.DateTime.Now);
+			int c = date.Compare(DateTime.Now);
 			if (done) {
 				return ViewManager.DeadlineState.Done;
 			} else if (c > 0) {

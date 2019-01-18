@@ -49,9 +49,9 @@ public abstract class BaseItem<T> : BaseItem where T : Data {
 		set {
 			if (_data == value) return;
 			if (_data != null)
-				_data.OnDataChanged -= OnDataChanged;
+				_data.OnDataChanged -= Refresh;
 			_data = value;
-			_data.OnDataChanged += OnDataChanged;
+			_data.OnDataChanged += Refresh;
 			Refresh();
 		}
 	}
@@ -88,10 +88,6 @@ public abstract class BaseItem<T> : BaseItem where T : Data {
 		base.Refresh();
 		name = _data.name;
 		nameInput.textComponent.fontStyle = _selected ? FontStyle.Bold : FontStyle.Normal;
-	}
-
-	void OnDataChanged(Data dummy) {
-		Refresh();
 	}
 
 }
