@@ -82,7 +82,7 @@ public abstract class BaseItem<T> : BaseItem where T : Data {
 		}
 	}
 
-	public void Copy(BaseItem<T> from) {
+	public virtual void Copy(BaseItem<T> from) {
 		name = from.name + " (Copy)";
 	}
 

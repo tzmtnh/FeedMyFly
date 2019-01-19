@@ -26,4 +26,14 @@ public class LineItem : BaseTaskItem<Line> {
 		return line.color;
 	}
 
+	public override void Copy(BaseItem<Line> from) {
+		base.Copy(from);
+		foreach (Task task in ((LineItem)from).line.tasks) {
+			Task copy = new Task(task);
+			copy.deadline = task.deadline;
+			line.tasks.Add(copy);
+		}
+		Refresh();
+	}
+
 }
