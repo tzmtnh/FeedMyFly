@@ -10,7 +10,7 @@ public class SubTask : Data, ISerializationCallbackReceiver {
 
 	public override DateTime dateTime {
 		get {
-			DateTime dt = parent.dateTime;
+			DateTime dt = parent.deadline;
 			if (this == parent.subtasks.Last)
 				return dt;
 
@@ -31,7 +31,7 @@ public class SubTask : Data, ISerializationCallbackReceiver {
 				SubTask subtask = parent.subtasks.list[i];
 				dt = dt.AddDays(subtask.offset);
 			}
-			parent.dateTime = dt;
+			parent.deadline = dt;
 			parent.subtasks.UpdateAll();
 		}
 	}

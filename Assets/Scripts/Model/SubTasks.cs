@@ -61,6 +61,16 @@ public class SubTasks : ISerializationCallbackReceiver {
 		}
 	}
 
+	public SubTask Current {
+		get {
+			foreach (SubTask subtask in list) {
+				if (subtask.done) continue;
+				return subtask;
+			}
+			return Last;
+		}
+	}
+
 	public void UpdateAll() {
 		foreach (SubTask subtask in list) {
 			subtask.OnChanged();

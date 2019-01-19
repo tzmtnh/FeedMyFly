@@ -11,7 +11,7 @@ public class SubTaskItem : BaseTaskItem<SubTask> {
 
 	public override void OnDateClicked() {
 		OnClicked();
-		ViewManager.inst.ShowSelectDateView(subtask.dateTime);
+		ViewManager.inst.ShowSelectDateView(subtask);
 	}
 
 	public override void Refresh() {

@@ -30,6 +30,16 @@ public class Tasks {
 		}
 	}
 
+	public Task Current {
+		get {
+			foreach (Task task in list) {
+				if (task.done) continue;
+				return task;
+			}
+			return Last;
+		}
+	}
+
 	public void Add(Task task) {
 		list.Add(task);
 	}
@@ -55,7 +65,7 @@ public class Tasks {
 		}
 	}
 
-	public static Tasks load() {
+	public static Tasks Load() {
 		if (File.Exists(saveFileName) == false) return new Tasks();
 
 		using (StreamReader streamReader = File.OpenText(saveFileName)) {

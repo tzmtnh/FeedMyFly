@@ -10,11 +10,12 @@ public class SelectDateView : BaseView {
 	public Text monthText;
 	public Text yearText;
 
+	Data _data;
 	DateTime _dateTime;
-	public DateTime dateTime {
-		get { return _dateTime; }
+	public Data data {
 		set {
-			_dateTime = value;
+			_data = value;
+			_dateTime = _data.dateTime;
 			Refresh();
 		}
 	}
@@ -58,6 +59,7 @@ public class SelectDateView : BaseView {
 	}
 
 	public void OnOKClicked() {
-		ViewManager.inst.OnDateSelected(_dateTime);
+		_data.dateTime = _dateTime;
+		ViewManager.inst.GoBack();
 	}
 }

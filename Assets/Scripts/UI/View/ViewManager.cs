@@ -71,34 +71,14 @@ public class ViewManager : MonoBehaviour {
 		view.AddTask(task);
 	}
 
-	public void ShowSelectDateView(DateTime dateTime) {
+	public void ShowSelectDateView(Data data) {
 		currentView = ViewLabel.SelectDate;
 		SelectDateView view = (SelectDateView)_views[ViewLabel.SelectDate];
-		view.dateTime = dateTime;
+		view.data = data;
 	}
 
 	public void ShowLinesView() {
 		currentView = ViewLabel.Lines;
-	}
-
-	public void OnDateSelected(DateTime dateTime) {
-		GoBack();
-
-		switch (currentView) {
-			case ViewLabel.Tasks:
-				TasksView tasksView = (TasksView)_views[ViewLabel.Tasks];
-				tasksView.selectedItem.data.dateTime = dateTime;
-				break;
-
-			case ViewLabel.SubTasks:
-				SubTasksView subtasksView = (SubTasksView)_views[ViewLabel.SubTasks];
-				subtasksView.selectedItem.data.dateTime = dateTime;
-				break;
-
-			default:
-				Debug.LogError("Unhandled view label!");
-				break;
-		}
 	}
 
 	public void GoBack() {

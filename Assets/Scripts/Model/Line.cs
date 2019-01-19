@@ -18,10 +18,8 @@ public class Line : Data {
 
 	public Color color {
 		get {
-			foreach (Task task in tasks) {
-				if (task.done) continue;
-				return task.color;
-			}
+			if (tasks.Count > 0)
+				return tasks.Current.color;
 			return ViewManager.GetColor(ViewManager.DeadlineState.Done);
 		}
 	}
@@ -29,12 +27,14 @@ public class Line : Data {
 	public override DateTime dateTime {
 		get {
 			if (tasks.Count > 0)
-				return tasks.Last.dateTime;
+				return tasks.Current.dateTime;
 			return DateTime.Now;
 		}
 
 		set {
-			tasks.Last.dateTime = value;
+			if (tasks.Count > 0)
+				tasks.Current.dateTime = value;
+			OnChanged();
 		}
 	}
 

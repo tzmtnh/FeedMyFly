@@ -19,6 +19,7 @@ public class LineItem : BaseTaskItem<Line> {
 
 	public override void OnDateClicked() {
 		OnClicked();
+		ViewManager.inst.ShowSelectDateView(data);
 	}
 
 	protected override Color GetBGColor() {

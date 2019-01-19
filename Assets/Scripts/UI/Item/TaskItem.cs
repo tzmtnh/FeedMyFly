@@ -27,7 +27,7 @@ public class TaskItem : BaseTaskItem<Task> {
 
 	public override void OnDateClicked() {
 		OnClicked();
-		ViewManager.inst.ShowSelectDateView(task.dateTime);
+		ViewManager.inst.ShowSelectDateView(task);
 	}
 
 	public override void Refresh() {

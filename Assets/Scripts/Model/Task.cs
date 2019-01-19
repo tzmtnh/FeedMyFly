@@ -11,7 +11,24 @@ public class Task : Data, ISerializationCallbackReceiver {
 	[SerializeField]
 	SerializableDate _date;
 	public override DateTime dateTime {
+		get {
+			if (subtasks.Count > 0)
+				return subtasks.Current.dateTime;
+			return _date.dateTime;
+		}
+
+		set {
+			if (subtasks.Count > 0)
+				subtasks.Current.dateTime = value;
+			else
+				deadline = value;
+			OnChanged();
+		}
+	}
+
+	public DateTime deadline {
 		get { return _date.dateTime; }
+
 		set {
 			_date.dateTime = value;
 			OnChanged();
@@ -28,10 +45,8 @@ public class Task : Data, ISerializationCallbackReceiver {
 
 	public Color color {
 		get {
-			foreach (SubTask subtask in subtasks) {
-				if (subtask.done) continue;
-				return subtask.color;
-			}
+			if (subtasks.Count > 0)
+				return subtasks.Current.color;
 			return ViewManager.GetColor(ViewManager.DeadlineState.Done);
 		}
 	}

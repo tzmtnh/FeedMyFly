@@ -26,7 +26,7 @@ public class SelectTaskView : BaseView<Task> {
 		base.Awake();
 
 		Tasks.saveFileName = Path.Combine(Application.persistentDataPath, "Tasks.json");
-		tasks = Tasks.load();
+		tasks = Tasks.Load();
 	}
 
 	public override void Show() {
