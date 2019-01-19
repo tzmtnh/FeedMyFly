@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,11 +26,15 @@ public class Line : Data {
 		}
 	}
 
-	public override SerializableDate date {
+	public override DateTime dateTime {
 		get {
-			if (tasks.Count == 0)
-				return null;
-			return tasks.Last.date;
+			if (tasks.Count > 0)
+				return tasks.Last.dateTime;
+			return DateTime.Now;
+		}
+
+		set {
+			tasks.Last.dateTime = value;
 		}
 	}
 

@@ -26,13 +26,15 @@ public abstract class BaseItem : ScrollItem {
 	protected abstract Color GetBGColor();
 
 	public virtual void Refresh() {
-		Color bgColor = GetBGColor();
-		if (selected) {
-			bgColor = Color.Lerp(bgColor, Color.white, 0f);
-		} else {
-			bgColor = Color.Lerp(bgColor, Color.black, 0.2f);
+		if (_bgImage != null) {
+			Color bgColor = GetBGColor();
+			if (selected) {
+				bgColor = Color.Lerp(bgColor, Color.white, 0f);
+			} else {
+				bgColor = Color.Lerp(bgColor, Color.black, 0.2f);
+			}
+			_bgImage.color = bgColor;
 		}
-		_bgImage.color = bgColor;
 	}
 
 	protected override void Awake() {

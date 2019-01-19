@@ -4,8 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-[System.Serializable]
+[Serializable]
 public class SubTasks : ISerializationCallbackReceiver {
+
+	[NonSerialized] Task _parent;
+	public Task parent {
+		get { return _parent; }
+		set {
+			_parent = value;
+			foreach (SubTask subtask in list) {
+				subtask.parent = value;
+			}
+		}
+	}
 
 	public List<SubTask> list = new List<SubTask>();
 
@@ -24,7 +35,7 @@ public class SubTasks : ISerializationCallbackReceiver {
 	}
 
 	public void Add(SubTask subtask) {
-		subtask.parent = this;
+		subtask.parent = parent;
 		list.Add(subtask);
 	}
 
@@ -40,11 +51,7 @@ public class SubTasks : ISerializationCallbackReceiver {
 
 	public void OnBeforeSerialize() { }
 
-	public void OnAfterDeserialize() {
-		foreach (SubTask subtask in list) {
-			subtask.parent = this;
-		}
-	}
+	public void OnAfterDeserialize() { }
 
 	public SubTask Last {
 		get {
@@ -54,29 +61,9 @@ public class SubTasks : ISerializationCallbackReceiver {
 		}
 	}
 
-	public void OnSubTaskChanged(SubTask subtask) {
-		Assert.IsTrue(list.Contains(subtask));
-		int index = list.IndexOf(subtask);
-
-		if (index > 0) {
-			DateTime dateTime = subtask.date.dateTime;
-			for (int i = index - 1; i >= 0; i--) {
-				SubTask s = list[i];
-				dateTime = dateTime.AddDays(-s.offset);
-				s.date.dateTime = dateTime;
-				s.OnChanged();
-			}
-		}
-
-		if (index < Count - 1) {
-			DateTime dateTime = subtask.date.dateTime;
-			dateTime = dateTime.AddDays(subtask.offset);
-			for (int i = index + 1; i < Count; i++) {
-				SubTask s = list[i];
-				s.date.dateTime = dateTime;
-				s.OnChanged();
-				dateTime = dateTime.AddDays(s.offset);
-			}
+	public void UpdateAll() {
+		foreach (SubTask subtask in list) {
+			subtask.OnChanged();
 		}
 	}
 

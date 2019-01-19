@@ -35,27 +35,19 @@ public class SerializableDate : ISerializationCallbackReceiver {
 		}
 	}
 
-	public int Compare(SerializableDate other) {
-		return Compare(other.dateTime);
-	}
-
-	public int Compare(DateTime other) {
-		int yearDelta = dateTime.Year - other.Year;
+	public static int Compare(DateTime a, DateTime b) {
+		int yearDelta = a.Year - b.Year;
 		if (yearDelta != 0) {
 			return (int)Mathf.Sign(yearDelta);
 		}
 
-		int monthDelta = dateTime.Month - other.Month;
+		int monthDelta = a.Month - b.Month;
 		if (monthDelta != 0) {
 			return (int)Mathf.Sign(monthDelta);
 		}
 
-		int dayDelta = dateTime.Day - other.Day;
+		int dayDelta = a.Day - b.Day;
 		return dayDelta == 0 ? 0 : (int)Mathf.Sign(dayDelta);
-	}
-
-	public override string ToString() {
-		return dateTime.ToShortDateString();
 	}
 
 }

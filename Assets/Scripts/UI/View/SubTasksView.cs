@@ -33,7 +33,7 @@ public class SubTasksView : BaseView<SubTask> {
 		foreach (SubTask subtask in _task.subtasks) {
 			CreateItem(subtask);
 		}
-		_task.subtasks.OnSubTaskChanged(_task.subtasks.list[0]);
+		_task.subtasks.UpdateAll();
 	}
 
 	protected override void OnItemDoubleClicked(BaseItem<SubTask> item) {

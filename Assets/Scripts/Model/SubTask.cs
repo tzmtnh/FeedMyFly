@@ -3,14 +3,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class SubTask : Data, ISerializationCallbackReceiver {
 
 	public bool done = false;
 
-	[SerializeField]
-	SerializableDate _date;
-	public override SerializableDate date { get { return _date; } }
+	public override DateTime dateTime {
+		get {
+			DateTime dt = parent.dateTime;
+			if (this == parent.subtasks.Last)
+				return dt;
+
+			for (int i = parent.subtasks.Count - 2; i >= 0; i--) {
+				SubTask subtask = parent.subtasks.list[i];
+				dt = dt.AddDays(-subtask.offset);
+				if (subtask == this)
+					return dt;
+			}
+
+			return DateTime.Now;
+		}
+
+		set {
+			DateTime dt = value;
+			int index = parent.subtasks.list.IndexOf(this);
+			for (int i = index; i < parent.subtasks.Count - 1; i++) {
+				SubTask subtask = parent.subtasks.list[i];
+				dt = dt.AddDays(subtask.offset);
+			}
+			parent.dateTime = dt;
+			parent.subtasks.UpdateAll();
+		}
+	}
 
 	[SerializeField]
 	int _offset = 1;
@@ -21,38 +45,28 @@ public class SubTask : Data, ISerializationCallbackReceiver {
 			int val = Mathf.Max(0, value);
 			if (_offset == val) return;
 			_offset = val;
-			OnChanged();
+			parent.subtasks.UpdateAll();
 		}
 	}
 
 	[NonSerialized]
-	public SubTasks parent;
+	public Task parent;
 
-	public bool IsLast { get { return this == parent.Last; } }
+	public bool IsLast { get { return this == parent.subtasks.Last; } }
 
-	public SubTask(string name) : base(name) {
-		_date = new SerializableDate();
-		_date.OnDateTimeChanged += OnDateTimeChanged;
-	}
+	public SubTask(string name) : base(name) { }
 
-	public SubTask(SubTask copyFrom) : this(copyFrom.name) { }
-
-	void OnDateTimeChanged() {
-		OnChanged();
-		parent.OnSubTaskChanged(this);
+	public SubTask(SubTask copyFrom) : this(copyFrom.name) {
+		_offset = copyFrom._offset;
 	}
 
 	public void OnBeforeSerialize() { }
 
-	public void OnAfterDeserialize() {
-		if (_date == null) return;
-		_date.OnDateTimeChanged -= OnDateTimeChanged;
-		_date.OnDateTimeChanged += OnDateTimeChanged;
-	}
+	public void OnAfterDeserialize() { }
 
 	public ViewManager.DeadlineState deadlineState {
 		get {
-			int c = date.Compare(DateTime.Now);
+			int c = SerializableDate.Compare(dateTime, DateTime.Now);
 			if (done) {
 				return ViewManager.DeadlineState.Done;
 			} else if (c > 0) {

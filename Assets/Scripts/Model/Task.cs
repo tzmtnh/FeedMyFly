@@ -4,15 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class Task : Data {
+public class Task : Data, ISerializationCallbackReceiver {
 
 	public SubTasks subtasks;
 
-	public override SerializableDate date {
-		get {
-			if (subtasks.Count == 0)
-				return null;
-			return subtasks.Last.date;
+	[SerializeField]
+	SerializableDate _date;
+	public override DateTime dateTime {
+		get { return _date.dateTime; }
+		set {
+			_date.dateTime = value;
+			OnChanged();
 		}
 	}
 
@@ -34,13 +36,19 @@ public class Task : Data {
 		}
 	}
 
-	public Task(string name) : base(name) {
-		subtasks = new SubTasks();
+	public void OnBeforeSerialize() { }
+
+	public void OnAfterDeserialize() {
+		subtasks.parent = this;
 	}
 
-	public Task(Task copyFrom) : base(copyFrom.name) {
+	public Task(string name) : base(name) {
 		subtasks = new SubTasks();
+		subtasks.parent = this;
+		_date = new SerializableDate();
+	}
 
+	public Task(Task copyFrom) : this(copyFrom.name) {
 		foreach (SubTask subtask in copyFrom.subtasks) {
 			SubTask copy = new SubTask(subtask);
 			subtasks.Add(copy);

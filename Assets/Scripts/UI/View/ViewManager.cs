@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,7 +15,6 @@ public class ViewManager : MonoBehaviour {
 	public Color colorLate = Color.red;
 	public Color colorDone = Color.gray;
 
-	bool _storePrevView = true;
 	Stack<ViewLabel> _prevViews = new Stack<ViewLabel>(8);
 	BaseView _currentView = null;
 	public ViewLabel currentView {
@@ -25,9 +25,7 @@ public class ViewManager : MonoBehaviour {
 			if (view != _currentView) {
 				if (_currentView != null) {
 					_currentView.Hide();
-					if (_storePrevView) {
-						_prevViews.Push(_currentView.label);
-					}
+					_prevViews.Push(_currentView.label);
 				}
 
 				_currentView = view;
@@ -73,21 +71,40 @@ public class ViewManager : MonoBehaviour {
 		view.AddTask(task);
 	}
 
-	public void ShowSelectDateView(SerializableDate date) {
+	public void ShowSelectDateView(DateTime dateTime) {
 		currentView = ViewLabel.SelectDate;
 		SelectDateView view = (SelectDateView)_views[ViewLabel.SelectDate];
-		view.date = date;
+		view.dateTime = dateTime;
 	}
 
 	public void ShowLinesView() {
 		currentView = ViewLabel.Lines;
 	}
 
+	public void OnDateSelected(DateTime dateTime) {
+		GoBack();
+
+		switch (currentView) {
+			case ViewLabel.Tasks:
+				TasksView tasksView = (TasksView)_views[ViewLabel.Tasks];
+				tasksView.selectedItem.data.dateTime = dateTime;
+				break;
+
+			case ViewLabel.SubTasks:
+				SubTasksView subtasksView = (SubTasksView)_views[ViewLabel.SubTasks];
+				subtasksView.selectedItem.data.dateTime = dateTime;
+				break;
+
+			default:
+				Debug.LogError("Unhandled view label!");
+				break;
+		}
+	}
+
 	public void GoBack() {
 		if (_prevViews.Count == 0) return;
-		_storePrevView = false;
 		currentView = _prevViews.Pop();
-		_storePrevView = true;
+		_prevViews.Pop(); // don't store last view
 	}
 
 	void Save() {

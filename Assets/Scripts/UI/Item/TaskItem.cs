@@ -11,11 +11,7 @@ public abstract class BaseTaskItem<T> : BaseItem<T> where T : Data {
 	public override void Refresh() {
 		base.Refresh();
 		if (dateText != null) {
-			if (data.date == null) {
-				dateText.text = "??/??/????";
-			} else {
-				dateText.text = data.date.ToString();
-			}
+			dateText.text = data.dateTime.ToShortDateString();
 		}
 	}
 
@@ -31,6 +27,7 @@ public class TaskItem : BaseTaskItem<Task> {
 
 	public override void OnDateClicked() {
 		OnClicked();
+		ViewManager.inst.ShowSelectDateView(task.dateTime);
 	}
 
 	public override void Refresh() {

@@ -6,7 +6,7 @@ public abstract class Data {
 
 	public string name;
 
-	public abstract SerializableDate date { get; }
+	public abstract DateTime dateTime { get; set; }
 
 	public Data(string name) {
 		this.name = name;

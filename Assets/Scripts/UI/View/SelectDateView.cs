@@ -11,11 +11,10 @@ public class SelectDateView : BaseView {
 	public Text yearText;
 
 	DateTime _dateTime;
-	SerializableDate _date;
-	public SerializableDate date {
+	public DateTime dateTime {
+		get { return _dateTime; }
 		set {
-			_date = value;
-			_dateTime = _date.dateTime;
+			_dateTime = value;
 			Refresh();
 		}
 	}
@@ -59,7 +58,6 @@ public class SelectDateView : BaseView {
 	}
 
 	public void OnOKClicked() {
-		_date.UpdateDate(_dateTime);
-		ViewManager.inst.GoBack();
+		ViewManager.inst.OnDateSelected(_dateTime);
 	}
 }
