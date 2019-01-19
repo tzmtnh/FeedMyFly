@@ -66,6 +66,8 @@ public class ViewManager : MonoBehaviour {
 
 	public void OnTaskSelected(Line line, Task task) {
 		currentView = ViewLabel.Tasks;
+		if (_prevViews.Peek() == ViewLabel.SelectTask)
+			_prevViews.Pop();
 		TasksView view = (TasksView)_views[ViewLabel.Tasks];
 		view.line = line;
 		view.AddTask(task);
@@ -83,8 +85,15 @@ public class ViewManager : MonoBehaviour {
 
 	public void GoBack() {
 		if (_prevViews.Count == 0) return;
+		ViewLabel last = currentView;
+		while (_prevViews.Count > 0 && _prevViews.Peek() == last)
+			_prevViews.Pop();
+
+		if (_prevViews.Count == 0) return;
 		currentView = _prevViews.Pop();
-		_prevViews.Pop(); // don't store last view
+
+		while (_prevViews.Count > 0 && _prevViews.Peek() == last)
+			_prevViews.Pop();
 	}
 
 	void Save() {
