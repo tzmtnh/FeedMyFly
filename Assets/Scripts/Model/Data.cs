@@ -4,11 +4,13 @@ using System.Collections.Generic;
 
 public abstract class Data {
 
+	public int version;
 	public string name;
 
 	public abstract DateTime dateTime { get; set; }
 
 	public Data(string name) {
+		version = ViewManager.version;
 		this.name = name;
 	}
 

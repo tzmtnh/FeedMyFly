@@ -7,6 +7,8 @@ public class ViewManager : MonoBehaviour {
 
 	public static ViewManager inst;
 
+	public static int version = 1;
+
 	public enum ViewLabel { Lines, Tasks, SubTasks, SelectTask, EditTasks, EditSubTasks, SelectDate, Welcome }
 
 	public enum DeadlineState { Future, Today, Late, Done }

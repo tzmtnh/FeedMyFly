@@ -93,4 +93,9 @@ public abstract class BaseItem<T> : BaseItem where T : Data {
 		nameInput.textComponent.fontStyle = _selected ? FontStyle.Bold : FontStyle.Normal;
 	}
 
+	void OnDestroy() {
+		if (_data != null)
+			_data.OnDataChanged -= Refresh;
+	}
+
 }
