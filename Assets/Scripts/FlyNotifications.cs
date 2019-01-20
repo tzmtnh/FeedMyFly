@@ -43,6 +43,17 @@ public class FlyNotifications : MonoBehaviour {
 				Color.yellow,
 				NotificationIcon.Bell);
 		}
+
+		DateTime birthday = new DateTime(2019, 1, 21, 9, 0, 0);
+		TimeSpan birthdaySpan = birthday.Subtract(now);
+		if (birthdaySpan.TotalDays > 0) {
+			NotificationManager.Send(
+				birthdaySpan,
+				"FeedMyFly Birthday Special!",
+				"Happy Birth Day <3",
+				Color.red,
+				NotificationIcon.Heart);
+		}
 	}
 
 	void Awake() {
