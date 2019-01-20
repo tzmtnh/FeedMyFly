@@ -59,7 +59,7 @@ public class SelectDateView : BaseView {
 	}
 
 	public void OnOKClicked() {
-		_data.dateTime = _dateTime;
+		_data.dateTime = new DateTime(_dateTime.Year, _dateTime.Month, _dateTime.Day, 10, 0, 0);
 		ViewManager.inst.GoBack();
 	}
 }
