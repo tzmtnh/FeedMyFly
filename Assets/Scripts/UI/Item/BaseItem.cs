@@ -8,6 +8,7 @@ public abstract class BaseItem : ScrollItem {
 
 	Image _bgImage;
 
+	public bool canEditName = true;
 	public InputField nameInput;
 
 	protected bool _selected = false;
@@ -18,7 +19,7 @@ public abstract class BaseItem : ScrollItem {
 			if (_selected == value) return;
 			if (_bgImage == null) return;
 			_selected = value;
-			nameInput.interactable = _selected;
+			nameInput.interactable = canEditName && _selected;
 			Refresh();
 		}
 	}
