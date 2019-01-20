@@ -17,6 +17,8 @@ public class ScrollPanel : MonoBehaviour {
 			height += item.height;
 		}
 		contentRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+		_itemsRectPosition.y = Mathf.Min(_itemsRectPosition.y, height - items[0].height);
+		contentRectTransform.anchoredPosition = _itemsRectPosition;
 	}
 
 	public void Drag(PointerEventData eventData) {

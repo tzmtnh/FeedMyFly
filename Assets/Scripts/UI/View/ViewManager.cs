@@ -25,7 +25,8 @@ public class ViewManager : MonoBehaviour {
 			if (view != _currentView) {
 				if (_currentView != null) {
 					_currentView.Hide();
-					_prevViews.Push(_currentView.label);
+					if (_currentView.label != ViewLabel.SelectDate && _currentView.label != ViewLabel.SelectTask && _currentView.label != ViewLabel.Welcome)
+						_prevViews.Push(_currentView.label);
 				}
 
 				_currentView = view;
@@ -66,8 +67,6 @@ public class ViewManager : MonoBehaviour {
 
 	public void OnTaskSelected(Line line, Task task) {
 		currentView = ViewLabel.Tasks;
-		if (_prevViews.Peek() == ViewLabel.SelectTask)
-			_prevViews.Pop();
 		TasksView view = (TasksView)_views[ViewLabel.Tasks];
 		view.line = line;
 		view.AddTask(task);
