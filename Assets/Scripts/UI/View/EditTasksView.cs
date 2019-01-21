@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EditTasksView : BaseView<Task> {
-	protected override string namePrefix { get { return "Task"; } }
 
 	protected override Task CreateData() {
-		Task task = new Task(GetUniqueName());
+		Task task = new Task("");
 		SelectTaskView.tasks.Add(task);
 		return task;
 	}

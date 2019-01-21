@@ -46,25 +46,6 @@ public abstract class BaseView<T> : BaseView where T : Data {
 		}
 	}
 
-	protected abstract string namePrefix { get; }
-	protected string GetUniqueName() {
-		int index = 0;
-		bool searching = true;
-		string uniqueName = "";
-		while (searching) {
-			index++;
-			uniqueName = namePrefix + " " + index;
-			searching = false;
-			foreach (BaseItem<T> item in _items) {
-				if (item.name == uniqueName) {
-					searching = true;
-					break;
-				}
-			}
-		}
-		return uniqueName;
-	}
-
 	protected abstract T CreateData();
 
 	protected BaseItem<T> CreateItem(T data = null) {

@@ -13,10 +13,8 @@ public class EditSubTasksView : BaseView<SubTask> {
 		}
 	}
 
-	protected override string namePrefix { get { return "SubTask"; } }
-
 	protected override SubTask CreateData() {
-		SubTask subtask = new SubTask(GetUniqueName());
+		SubTask subtask = new SubTask("");
 		_task.subtasks.Add(subtask);
 		return subtask;
 	}

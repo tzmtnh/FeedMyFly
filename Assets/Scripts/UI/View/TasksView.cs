@@ -14,10 +14,8 @@ public class TasksView : BaseView<Task> {
 		}
 	}
 
-	protected override string namePrefix { get { return "Task"; } }
-
 	protected override Task CreateData() {
-		Task task = new Task(GetUniqueName());
+		Task task = new Task("");
 		_line.tasks.Add(task);
 		return task;
 	}

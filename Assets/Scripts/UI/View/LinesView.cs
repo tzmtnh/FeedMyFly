@@ -7,10 +7,8 @@ public class LinesView : BaseView<Line> {
 
 	public static Lines lines = new Lines();
 
-	protected override string namePrefix { get { return "Line"; } }
-
 	protected override Line CreateData() {
-		Line line = new Line(GetUniqueName());
+		Line line = new Line("");
 		lines.Add(line);
 		return line;
 	}

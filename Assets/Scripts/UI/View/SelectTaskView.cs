@@ -10,10 +10,8 @@ public class SelectTaskView : BaseView<Task> {
 
 	public static Tasks tasks = new Tasks();
 
-	protected override string namePrefix { get { return "Task"; } }
-
 	protected override Task CreateData() {
-		Task task = new Task(GetUniqueName());
+		Task task = new Task("");
 		tasks.Add(task);
 		return task;
 	}
