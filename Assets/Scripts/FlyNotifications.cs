@@ -23,7 +23,7 @@ public class FlyNotifications : MonoBehaviour {
 				TimeSpan span = dateTime.Subtract(now);
 
 				int days = (int)span.TotalDays;
-				if (days >= 0 && days <= nextDays) {
+				if (days > 0 && days <= nextDays) {
 					if (days == nextDays) {
 						tasksCount++;
 					} else {
@@ -39,11 +39,13 @@ public class FlyNotifications : MonoBehaviour {
 			NotificationManager.Send(
 				nextSpan, 
 				"FeedMyFly Daily Reminder",
-				"You have " + tasksCount + " Scheduled for today!",
+				"You have " + tasksCount + " task " + (tasksCount == 1 ? "" : "s") + " scheduled for today!",
 				Color.yellow,
 				NotificationIcon.Bell);
+			Debug.Log("Reminder added, Tasks: " + tasksCount);
 		}
 
+		/*
 		DateTime birthday = new DateTime(2019, 1, 21, 9, 0, 0);
 		TimeSpan birthdaySpan = birthday.Subtract(now);
 		if (birthdaySpan.TotalDays > 0) {
@@ -54,6 +56,7 @@ public class FlyNotifications : MonoBehaviour {
 				Color.red,
 				NotificationIcon.Heart);
 		}
+		*/
 	}
 
 	void Awake() {
