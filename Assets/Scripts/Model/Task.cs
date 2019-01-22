@@ -64,10 +64,17 @@ public class Task : Data, ISerializationCallbackReceiver {
 	}
 
 	public Task(Task copyFrom) : this(copyFrom.name) {
+		DateTime dateTime = DateTime.Now;
 		foreach (SubTask subtask in copyFrom.subtasks) {
 			SubTask copy = new SubTask(subtask);
 			subtasks.Add(copy);
+
+			if (subtask != copyFrom.subtasks.Last) {
+				dateTime = dateTime.AddDays(copy.offset);
+			}
 		}
+
+		_date.UpdateDate(dateTime);
 	}
 
 }
